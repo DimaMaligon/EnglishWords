@@ -8,7 +8,7 @@ import com.example.englishwords.db.MyDbManager
 class LetterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLetterBinding
     private val myDbManager = MyDbManager(this)
-    private lateinit var letter: String
+    private var letter: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,14 @@ class LetterActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onResume() {
+        super.onResume()
+        myDbManager.openDb()
+        letter?.let {
+            readWordsLetter(it)
+        }
+    }
+
     private fun readWordsLetter(letter: String) {
         val list = myDbManager.readWordsTable(letter)
         for (item in list) {
@@ -33,18 +41,22 @@ class LetterActivity : AppCompatActivity() {
         }
     }
 
-    private fun onClickSave(letter: String) {
+    private fun onClickSave(letter: String?) {
         binding.button.setOnClickListener {
             myDbManager.openDb()
-            myDbManager.insertToLetterTable(
-                letter
-            )
-            myDbManager.insertToWordsTable(
-                letter,
-                binding.editTextTextPersonName.text.toString(),
-                binding.editTextTextPersonName2.text.toString()
-            )
-            readWordsLetter(letter)
+            letter?.let { it1 ->
+                myDbManager.insertToLetterTable(
+                    it1
+                )
+            }
+            letter?.let { it1 ->
+                myDbManager.insertToWordsTable(
+                    it1,
+                    binding.editTextTextPersonName.text.toString(),
+                    binding.editTextTextPersonName2.text.toString()
+                )
+            }
+            letter?.let { it1 -> readWordsLetter(it1) }
         }
     }
 }

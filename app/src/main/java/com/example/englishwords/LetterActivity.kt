@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.englishwords.db.MyDbManager
 
-class ProfileActivity : AppCompatActivity() {
+class LetterActivity : AppCompatActivity() {
     private val myDbManager = MyDbManager(this)
     private val letter: String? by lazy {
         intent.getSerializableExtra(letterId, String::class.java)
@@ -34,33 +34,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         myDbManager.openDb()
         setContent {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = {
-                            Text(text = "Кнопка Назад")
-                        },
-                        navigationIcon = {
-                            IconButton(onClick = {}) {
-                                Icon(Icons.Filled.ArrowBack, "backIcon")
-                            }
-                        },
-                        backgroundColor = MaterialTheme.colors.primary,
-                        contentColor = Color.White,
-                        elevation = 10.dp
-                    )
-                },
-                content = { padding ->
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(100.dp)
-                        ) {
-                            ReadAndShowWords(myDbManager = myDbManager, letter = letter)
-                            TextFieldsAndSaveButton(myDbManager = myDbManager, letter = letter)
-                        }
-
-                }
-            )
+            ScreenLetter(myDbManager = myDbManager, letter = letter)
         }
     }
 
@@ -72,21 +46,54 @@ class ProfileActivity : AppCompatActivity() {
     companion object {
         private val letterId = "letter"
         fun newIntent(context: Context, letter: String) =
-            Intent(context, ProfileActivity::class.java).apply {
+            Intent(context, LetterActivity::class.java).apply {
                 putExtra(letterId, letter)
             }
     }
 }
 
 @Composable
+fun ScreenLetter(myDbManager: MyDbManager, letter: String?) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Кнопка Назад")
+                },
+                navigationIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                    }
+                },
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = Color.White,
+                elevation = 10.dp
+            )
+        },
+        content = { padding ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(100.dp)
+            ) {
+                ReadAndShowWords(myDbManager = myDbManager, letter = letter)
+            }
+
+        }
+    )
+}
+
+@Composable
 fun ReadAndShowWords(myDbManager: MyDbManager, letter: String?) {
+    val englishWord = remember { mutableStateOf("") }
+    val englishTranscription = remember { mutableStateOf("") }
+    var englishList: MutableList<String>
+
     Column() {
         Column() {
             Text(
                 text = "Слова на букву $letter",
                 fontSize = 25.sp,
                 fontStyle = FontStyle.Normal
-
             )
         }
         Column(
@@ -96,42 +103,36 @@ fun ReadAndShowWords(myDbManager: MyDbManager, letter: String?) {
                 .verticalScroll(rememberScrollState())
 
         ) {
-            val list = myDbManager.readWordsTable(letter)
-            for (item in list) {
+            englishList = myDbManager.readWordsTable(letter)
+            for (item in englishList) {
                 Text(
                     text = "$item\n"
                 )
             }
         }
-    }
-}
+        Column {
+            TextField(value = englishWord.value, onValueChange = { englishWord.value = it })
+            TextField(
+                value = englishTranscription.value,
+                onValueChange = { englishTranscription.value = it })
 
-@Composable
-fun TextFieldsAndSaveButton(myDbManager: MyDbManager, letter: String?) {
-    val englishWord = remember { mutableStateOf("") }
-    val englishTranscription = remember { mutableStateOf("") }
-
-    Column {
-        TextField(value = englishWord.value, onValueChange = { englishWord.value = it })
-        TextField(
-            value = englishTranscription.value,
-            onValueChange = { englishTranscription.value = it })
-
-        Button(onClick = {
-            letter?.let { it1 ->
-                myDbManager.insertToLetterTable(
-                    it1
-                )
+            Button(onClick = {
+                letter?.let { it1 ->
+                    myDbManager.insertToLetterTable(
+                        it1
+                    )
+                }
+                letter?.let { it1 ->
+                    myDbManager.insertToWordsTable(
+                        it1,
+                        englishWord.value,
+                        englishTranscription.value
+                    )
+                }
+                englishList = myDbManager.readWordsTable(letter)
+            }) {
+                Text("Save", fontSize = 25.sp)
             }
-            letter?.let { it1 ->
-                myDbManager.insertToWordsTable(
-                    it1,
-                    englishWord.value,
-                    englishTranscription.value
-                )
-            }
-        }) {
-            Text("Save", fontSize = 25.sp)
         }
     }
 }

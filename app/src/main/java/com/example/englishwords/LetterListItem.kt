@@ -30,7 +30,7 @@ fun LetterListItem(letter: String, navigateToProfile: (String) -> Unit) {
             }
         ) {
             Text(
-                text = letter.toString(),
+                text = letter,
                 fontSize = 35.sp,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,

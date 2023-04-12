@@ -30,7 +30,7 @@ class MyDbManager(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readWordsTable(letter: String): ArrayList<String> {
+    fun readWordsTable(letter: String?): ArrayList<String> {
         val dataList = ArrayList<String>()
 
         val cursor = db?.query(

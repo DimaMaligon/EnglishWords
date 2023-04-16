@@ -22,13 +22,6 @@ class MyDbManager(context: Context) {
         db?.insert(MyDataBase.TABLE_NAME_WORDS, null, valuesSet)
     }
 
-    fun insertToLetterTable(letter: String) {
-        val valuesSet = ContentValues().apply {
-            put(MyDataBase.LETTER, letter)
-        }
-        db?.insert(MyDataBase.TABLE_NAME_LETTER, null, valuesSet)
-    }
-
     @SuppressLint("Range")
     fun readWordsTable(letter: String?): ArrayList<String> {
         val dataList = ArrayList<String>()

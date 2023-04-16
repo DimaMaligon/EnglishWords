@@ -1,10 +1,5 @@
 package com.example.englishwords
 
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,38 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.englishwords.db.MyDbManager
 
-class LetterActivity : AppCompatActivity() {
-    private val myDbManager = MyDbManager(this)
-    private val letter: String? by lazy {
-        intent.getSerializableExtra(letterId, String::class.java)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        myDbManager.openDb()
-        setContent {
-            ScreenLetter(myDbManager = myDbManager, letter = letter)
-        }
-    }
-
-    override fun onDestroy() {
-        myDbManager.closeDb()
-        super.onDestroy()
-    }
-
-    companion object {
-        private val letterId = "letter"
-        fun newIntent(context: Context, letter: String) =
-            Intent(context, LetterActivity::class.java).apply {
-                putExtra(letterId, letter)
-            }
-    }
-}
 
 @Composable
-fun ScreenLetter(myDbManager: MyDbManager, letter: String?) {
+fun LetterScreen(navController: NavHostController, myDbManager: MyDbManager, letter: String?) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -118,11 +87,6 @@ fun ReadAndShowWords(myDbManager: MyDbManager, letter: String?) {
 
             Button(onClick = {
                 letter?.let { it1 ->
-                    myDbManager.insertToLetterTable(
-                        it1
-                    )
-                }
-                letter?.let { it1 ->
                     myDbManager.insertToWordsTable(
                         it1,
                         englishWord.value,
@@ -136,3 +100,4 @@ fun ReadAndShowWords(myDbManager: MyDbManager, letter: String?) {
         }
     }
 }
+

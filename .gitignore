@@ -1,4 +1,5 @@
 *.ipr
+.idea/**
 .idea/
 *.iml
 .gradle

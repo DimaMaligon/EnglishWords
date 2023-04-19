@@ -3,10 +3,6 @@ package com.example.englishwords
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.englishwords.db.MyDbManager
@@ -19,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             myDbManager.openDb()
             navController = rememberNavController()
-            SetUpNavGraph(navController = navController, myDbManager)
+            NavGraph(navController = navController, myDbManager)
         }
     }
 

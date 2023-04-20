@@ -27,10 +27,12 @@ fun LetterScreen(navController: NavHostController, myDbManager: MyDbManager, let
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Кнопка Назад")
+                    Text(text = "")
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
                         Icon(Icons.Filled.ArrowBack, "backIcon")
                     }
                 },

@@ -1,11 +1,13 @@
 buildscript {
     ext.kotlin_version = "1.8.0"
-    ext.compose_version = "1.4.1"
+    ext.compose_version = "1.4.2"
 }
 
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
     dependencies {
@@ -14,14 +16,14 @@ plugins {
         implementation "com.google.android.material:material:$kotlin_version"
         implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-        implementation "androidx.compose.compiler:compiler:1.4.4"
+        implementation "androidx.compose.compiler:compiler:1.4.6"
         implementation "androidx.compose.foundation:foundation:$compose_version"
         implementation "androidx.compose.material:material:$compose_version"
         implementation "androidx.compose.runtime:runtime:$compose_version"
         implementation "androidx.compose.ui:ui:$compose_version"
         implementation("io.coil-kt:coil-compose:2.3.0")
         implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-        implementation 'androidx.activity:activity-compose:1.7.0'
+        implementation 'androidx.activity:activity-compose:1.7.1'
         implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
         implementation 'androidx.navigation:navigation-runtime-ktx:2.5.3'
 
@@ -34,6 +36,9 @@ plugins {
 
         def nav_version = "2.5.3"
         implementation("androidx.navigation:navigation-compose:$nav_version")
+
+        implementation "com.google.dagger:hilt-android:2.44.2"
+        kapt "com.google.dagger:hilt-compiler:2.44"
     }
 
 android {
@@ -60,11 +65,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
@@ -81,9 +86,5 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }

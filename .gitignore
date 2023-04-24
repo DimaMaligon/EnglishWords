@@ -5,10 +5,12 @@
 .gradle
 gradle/
 build/
-/local.properties
+/.idea/compiler.xml
 /.idea/caches
+/local.properties
 /.idea/libraries
 /.idea/modules.xml
+/.idea/misc.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml

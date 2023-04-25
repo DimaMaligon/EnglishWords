@@ -1,4 +1,4 @@
-package com.example.englishwords
+package com.example.englishwords.navigation
 
 const val DETAIL_ARGUMENT_LETTER = "letter"
 

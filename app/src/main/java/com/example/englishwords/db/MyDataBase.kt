@@ -2,7 +2,7 @@ package com.example.englishwords.db
 
 import android.provider.BaseColumns
 
-object MyDataBase: BaseColumns {
+object MyDataBase : BaseColumns {
     const val TABLE_NAME_WORDS = "words_table"
     const val WORDS_OF_LETTER = "words"
     const val TRANSLATE_OF_WORD = "transcription"

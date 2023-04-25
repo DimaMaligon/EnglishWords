@@ -1,12 +1,15 @@
 package com.example.englishwords.db
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.ContentValues
-import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MyDbManager(context: Context) {
-    val myDbHelper = DbHelper(context)
+@Singleton
+class MyDbManager @Inject constructor(application: Application) {
+    val myDbHelper = DbHelper(application)
     var db: SQLiteDatabase? = null
 
     fun openDb() {

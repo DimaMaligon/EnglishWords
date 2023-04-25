@@ -3,8 +3,9 @@ package com.example.englishwords
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -21,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +58,7 @@ fun LetterScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(100.dp)
             ) {
-                ReadAndShowWords(letterViewModel = letterViewModel, letterFrom = letter)
+                Words(letterViewModel = letterViewModel, letterFrom = letter)
             }
 
         }
@@ -64,51 +66,68 @@ fun LetterScreen(
 }
 
 @Composable
-fun ReadAndShowWords(letterViewModel: LetterViewModel, letterFrom: String?) {
+fun Words(letterViewModel: LetterViewModel, letterFrom: String?) {
     letterViewModel.apply {
         val letterScreen by letter.collectAsState()
         val englishWord by englishWord.collectAsState()
         val englishTranscription by englishTranscription.collectAsState()
         val englishList by englishList.collectAsState()
 
-        setLetter(letterFrom!!)
+        setLetter(letterFrom)
         Column() {
             Column() {
+                val titleScreen = stringResource(R.string.title_screen_letter)
                 Text(
-                    text = "Слова на букву $letterScreen",
+                    text = "$titleScreen $letterScreen",
                     fontSize = 25.sp,
                     fontStyle = FontStyle.Normal
                 )
             }
-            Column(
-                modifier = Modifier
-                    .padding(50.dp)
-                    .height(70.dp)
-                    .verticalScroll(rememberScrollState())
-
-            ) {
-                for (item in englishList) {
-                    Text(
-                        text = "$item\n"
-                    )
-                }
-            }
+            WordList(listWords = englishList)
             Column {
-                TextField(value = englishWord, onValueChange = { setEnglishWord(it) })
+                TextField(
+                    value = englishWord,
+                    onValueChange = { setEnglishWord(it) })
+
                 TextField(
                     value = englishTranscription,
-                    onValueChange = { setEnglishTranscription(it) })
+                    onValueChange = { setEnglishTranscription(it) },
+                    Modifier.padding(top = 10.dp))
 
-                Button(onClick = {
-                    setTap(true)
-                    getEnglishList()
-                    setTap(false)
+                Button(
+                    onClick = {
+                        setTap(true)
+                        getEnglishList()
+                        setTap(false)
 
-                }) {
-                    Text("Save", fontSize = 25.sp)
+                    },
+                    Modifier
+                        .width(250.dp)
+                        .padding(top = 10.dp)
+                ) {
+                    Text(stringResource(R.string.save_word), fontSize = 25.sp)
                 }
             }
         }
     }
 }
+
+@Composable 
+fun WordList(listWords: List<String>){
+    LazyColumn(
+        modifier = Modifier
+            .padding(8.dp)
+            .height(120.dp)
+
+    ) {
+        items(listWords) {
+            Text(
+                text = it,
+                modifier = Modifier.padding(vertical = 10.dp)
+            )
+
+        }
+    }
+}
+
 

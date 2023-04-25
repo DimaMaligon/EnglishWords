@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EnglishWords</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="save_word">Сохранить</string>
+    <string name="title_screen_letter">Слова на букву</string>
 </resources>

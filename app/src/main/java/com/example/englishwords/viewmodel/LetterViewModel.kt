@@ -22,8 +22,8 @@ class LetterViewModel @Inject constructor(val myDbManager: MyDbManager) : ViewMo
     private val tapMutable = MutableStateFlow(false)
     val tap: StateFlow<Boolean> = tapMutable
 
-    fun setLetter(letter: String) {
-        letterMutable.value = letter
+    fun setLetter(letter: String?) {
+        letterMutable.value = letter.toString()
     }
 
     fun setEnglishWord(word: String) {

@@ -32,7 +32,7 @@ fun NavGraph(
         composable(
             route = Screens.Letter.route
         ) {
-            val letterFromList = it.arguments?.getString(DETAIL_ARGUMENT_LETTER).toString()
+            val letterFromList = it.arguments?.getString(DETAIL_ARGUMENT_LETTER) ?: ""
             LetterScreen(navController, letterFromList, letterViewModel)
         }
 

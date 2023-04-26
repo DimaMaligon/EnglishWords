@@ -83,6 +83,8 @@ fun Words(letterViewModel: LetterViewModel, letterFrom: String?) {
                     fontStyle = FontStyle.Normal
                 )
             }
+
+            getEnglishList()
             WordList(listWords = englishList)
             Column {
                 TextField(

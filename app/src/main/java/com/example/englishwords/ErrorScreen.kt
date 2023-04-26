@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun ErrorScreen(navController: NavHostController) {
                 modifier = Modifier.padding(100.dp)
             ) {
                 Text(
-                    text = "ERROR Буква не найдена",
+                    text = stringResource(id = R.string.title_screen_error),
                     textAlign = TextAlign.Center,
                     fontSize = 25.sp,
                     color = Color.Red

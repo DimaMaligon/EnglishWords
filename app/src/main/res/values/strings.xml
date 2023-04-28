@@ -3,6 +3,7 @@
     <string name="app_name">EnglishWords</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="save_word">Сохранить</string>
+    <string name="repeat_words">Повторить</string>
     <string name="title_screen_letter">Слова на букву</string>
     <string name="title_screen_error">ERROR!!! Буква не найдена</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.englishwords.db.MyDbManager
 import com.example.englishwords.navigation.NavGraph
+import com.example.englishwords.ui.theme.EnglishWordsTheme
 import com.example.englishwords.viewmodel.LetterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,8 +24,10 @@ class MainActivity : ComponentActivity() {
         myDbManager.openDb()
         val vm: LetterViewModel by viewModels()
         setContent {
-            navController = rememberNavController()
-            NavGraph(navController = navController, letterViewModel = vm)
+            EnglishWordsTheme {
+                    navController = rememberNavController()
+                    NavGraph(navController = navController, letterViewModel = vm)
+            }
         }
     }
 

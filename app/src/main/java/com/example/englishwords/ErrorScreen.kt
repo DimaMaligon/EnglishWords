@@ -26,7 +26,7 @@ fun ErrorScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "")
+                    Text(text = "English Words")
                 },
                 navigationIcon = {
                     IconButton(onClick = {

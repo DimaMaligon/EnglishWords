@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.englishwords.ErrorScreen
 import com.example.englishwords.LetterListScreen
 import com.example.englishwords.LetterScreen
 import com.example.englishwords.viewmodel.LetterViewModel
@@ -33,7 +34,16 @@ fun NavGraph(
             route = Screens.Letter.route
         ) {
             val letterFromList = it.arguments?.getString(DETAIL_ARGUMENT_LETTER) ?: ""
-            LetterScreen(navController, letterFromList, letterViewModel)
+            when(letterFromList){
+                ""-> ErrorScreen(navController)
+                else -> LetterScreen(navController, letterFromList, letterViewModel)
+            }
+        }
+
+        composable(
+            route = Screens.Error.route
+        ) {
+            ErrorScreen(navController)
         }
 
     }

@@ -65,7 +65,7 @@ fun RepeatWordsScreen(navController: NavHostController) {
                 IconButton(onClick = {
                     openDialog = !openDialog
                 }) {
-                    Icon(Icons.Filled.Info, "infoIcon")
+                    Icon(Icons.Filled.Info, stringResource(id = R.string.title_icon_info))
                 }
 
             },
@@ -73,7 +73,7 @@ fun RepeatWordsScreen(navController: NavHostController) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
-                    Icon(Icons.Filled.ArrowBack, "backIcon")
+                    Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.title_icon_info))
                 }
             },
             colors = TopAppBarDefaults.smallTopAppBarColors(
@@ -98,8 +98,8 @@ fun RepeatWordsScreen(navController: NavHostController) {
                         .padding(top = 250.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Угадал", fontSize = 25.sp)
-                    Text(text = "Не угадал", Modifier.padding(start = 20.dp), fontSize = 25.sp)
+                    Text(text = stringResource(id = R.string.guess_word), fontSize = 25.sp)
+                    Text(text = stringResource(id = R.string.no_guess_word), Modifier.padding(start = 20.dp), fontSize = 25.sp)
                 }
                 Row(
                     Modifier
@@ -199,8 +199,7 @@ fun PopupWindowDialog(openDialog: Boolean){
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Выберите один из вариантов перевода.\n" +
-                                    "Счетчики указывают количество правильных и неправильных ответов",
+                            text = stringResource(id = R.string.text_ifo_about_app),
                             modifier = Modifier.padding(vertical = 5.dp),
                             fontSize = 16.sp
                         )

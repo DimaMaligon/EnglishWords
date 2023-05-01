@@ -41,7 +41,7 @@ fun ErrorScreen(navController: NavHostController) {
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.title_icon_back))
                     }
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(

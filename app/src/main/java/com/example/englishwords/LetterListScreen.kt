@@ -35,6 +35,10 @@ import com.example.englishwords.data.Alphabet
 import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
 
+object Constants {
+    const val GridCells = 4
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LetterListScreen(navController: NavHostController) {
@@ -46,8 +50,11 @@ fun LetterListScreen(navController: NavHostController) {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = stringResource(id = R.string.app_name), Modifier.padding(start = 50.dp),
-                            fontFamily = fontPlayfair, fontWeight = FontWeight.Normal
+                        Text(
+                            text = stringResource(id = R.string.app_name),
+                            Modifier.padding(start = 50.dp),
+                            fontFamily = fontPlayfair,
+                            fontWeight = FontWeight.Normal
                         )
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(
@@ -59,7 +66,7 @@ fun LetterListScreen(navController: NavHostController) {
             content = { padding ->
                 Column(modifier = Modifier.padding(padding)) {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(4)
+                        columns = GridCells.Fixed(Constants.GridCells)
                     ) {
                         items(
                             letters.size,

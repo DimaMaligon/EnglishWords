@@ -58,7 +58,7 @@ fun LetterScreen(
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.title_icon_back))
                     }
                 }
             )

@@ -10,6 +10,5 @@
     <string name="title_icon_back">backIcon</string>
     <string name="guess_word">Угадал</string>
     <string name="no_guess_word">Не угадал</string>
-    <string name="text_ifo_about_app">"Выберите один из вариантов перевода.\n" +
-                                    "Счетчики указывают количество правильных и неправильных ответов"</string>
+    <string name="text_ifo_about_app">"Выберите один из вариантов перевода.\nСчетчики указывают количество правильных и неправильных ответов"</string>
 </resources>

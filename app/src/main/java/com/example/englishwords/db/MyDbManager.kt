@@ -49,6 +49,30 @@ class MyDbManager @Inject constructor(application: Application) {
         return dataList
     }
 
+    @SuppressLint("Range")
+    fun readRandomWordsTable(): HashMap<String, String> {
+        val dataMap = HashMap<String, String>()
+
+        val cursor = db?.query(
+            MyDataBase.TABLE_NAME_WORDS,   // The table to query
+            null,             // The array of columns to return (pass null to get all)
+            null,   // The columns for the WHERE clause
+            null,          // The values for the WHERE clause
+            null,                   // don't group the rows
+            null,                   // don't filter by row groups
+            "RANDOM() LIMIT 4"            // The sort order
+        )
+        with(cursor) {
+            while (this?.moveToNext()!!) {
+                val dataWord = getString(getColumnIndex(MyDataBase.WORDS_OF_LETTER))
+                val dataTranslate = getString(getColumnIndex(MyDataBase.TRANSLATE_OF_WORD))
+                dataMap[dataWord] = dataTranslate
+            }
+        }
+        cursor?.close()
+        return dataMap
+    }
+
     fun closeDb() {
         myDbHelper.close()
     }

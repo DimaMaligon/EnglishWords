@@ -93,6 +93,8 @@ fun RepeatWordsScreen(
                 ) {
                     PopupWindowDialog(openDialog = openDialog)
                 }
+                repeatWordsViewModel.getEnglishWordsMap()
+                repeatWordsViewModel.updateTranslateList()
                 CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
                 ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
             }
@@ -102,8 +104,6 @@ fun RepeatWordsScreen(
 
 @Composable
 fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
-    repeatWordsViewModel.getEnglishWordsMap()
-    repeatWordsViewModel.updateTranslateList()
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
         val noCountGuess by noGuessCount.collectAsState()

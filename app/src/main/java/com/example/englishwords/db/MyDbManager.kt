@@ -63,7 +63,7 @@ class MyDbManager @Inject constructor(application: Application) {
             "RANDOM() LIMIT 4"            // The sort order
         )
         with(cursor) {
-            while (this?.moveToNext()!!) {
+            while (this?.moveToNext() == true) {
                 val dataWord = getString(getColumnIndex(MyDataBase.WORDS_OF_LETTER))
                 val dataTranslate = getString(getColumnIndex(MyDataBase.TRANSLATE_OF_WORD))
                 dataMap[dataWord] = dataTranslate

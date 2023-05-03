@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.example.englishwords.ErrorScreen
 import com.example.englishwords.LetterListScreen
 import com.example.englishwords.LetterScreen
+import com.example.englishwords.RepeatWordsScreen
 import com.example.englishwords.viewmodel.LetterViewModel
 
 @Composable
@@ -44,6 +45,12 @@ fun NavGraph(
             route = Screens.Error.route
         ) {
             ErrorScreen(navController)
+        }
+
+        composable(
+            route = Screens.RepeatWords.route
+        ) {
+            RepeatWordsScreen(navController)
         }
 
     }

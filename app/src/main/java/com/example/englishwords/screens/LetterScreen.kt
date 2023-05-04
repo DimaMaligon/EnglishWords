@@ -1,4 +1,4 @@
-package com.example.englishwords
+package com.example.englishwords.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.LetterViewModel
 
@@ -46,7 +47,7 @@ fun LetterScreen(
                 title = {
                     Text(
                         text = stringResource(id = R.string.app_name),
-                        Modifier.padding(start = 10.dp),
+                        Modifier.padding(),
                         fontFamily = fontPlayfair,
                         fontWeight = FontWeight.Normal
                     )

@@ -10,5 +10,6 @@
     <string name="title_icon_back">backIcon</string>
     <string name="guess_word">Угадал</string>
     <string name="no_guess_word">Не угадал</string>
-    <string name="text_ifo_about_app">"Выберите один из вариантов перевода.\nСчетчики указывают количество правильных и неправильных ответов"</string>
+    <string name="text_ifo_about_repeat_words">Выберите один из вариантов перевода.\nСчетчики указывают количество правильных и неправильных ответов"</string>
+    <string name="text_ifo_about_app">Приложение по изучению английского.\nНиже вы можете перейти в \"Словарь\" и добавить слово или \"Упражнение\" и выучить добавленные слова</string>
 </resources>

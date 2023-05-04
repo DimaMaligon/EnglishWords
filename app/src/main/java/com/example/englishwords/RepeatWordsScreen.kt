@@ -26,6 +26,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,18 +40,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
-import com.example.englishwords.data.Alphabet
-import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
+import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RepeatWordsScreen(navController: NavHostController) {
-    val letters = remember {
-        Alphabet.listLetters
-    }
+fun RepeatWordsScreen(
+    navController: NavHostController,
+    repeatWordsViewModel: RepeatWordsViewModel
+) {
     var openDialog by remember { mutableStateOf(false) }
-
     Scaffold(topBar = {
         TopAppBar(
             title = {
@@ -87,88 +86,115 @@ fun RepeatWordsScreen(navController: NavHostController) {
                     .padding(padding)
                     .fillMaxSize()
             ) {
-            Row(Modifier
-                .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center) {
-                PopupWindowDialog(openDialog = openDialog)
-            }
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 250.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = stringResource(id = R.string.guess_word), fontSize = 25.sp)
-                    Text(text = stringResource(id = R.string.no_guess_word), Modifier.padding(start = 20.dp), fontSize = 25.sp)
-                }
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 55.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "0", fontSize = 25.sp)
-                    Text(text = "0", Modifier.padding(start = 100.dp), fontSize = 25.sp)
-                }
                 Row(
                     Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Слово", fontSize = 25.sp)
+                    PopupWindowDialog(openDialog = openDialog)
                 }
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Button(
-                        onClick = {
-                            navController.navigate(route = Screens.RepeatWords.route)
-                        },
-                        Modifier
-                            .width(160.dp)
-                            .padding(top = 10.dp)
-                    ) {
-                        Text(stringResource(R.string.repeat_words), fontSize = 20.sp)
-                    }
-                    Button(
-                        onClick = {
-                            navController.navigate(route = Screens.RepeatWords.route)
-                        },
-                        Modifier
-                            .width(165.dp)
-                            .padding(start = 10.dp, top = 10.dp)
-                    ) {
-                        Text(stringResource(R.string.repeat_words), fontSize = 20.sp)
-                    }
-                }
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Button(
-                        onClick = {
-                            navController.navigate(route = Screens.RepeatWords.route)
-                        },
-                        Modifier
-                            .width(160.dp)
-                            .padding(top = 10.dp)
-                    ) {
-                        Text(stringResource(R.string.repeat_words), fontSize = 20.sp)
-                    }
-                    Button(
-                        onClick = {
-                            navController.navigate(route = Screens.RepeatWords.route)
-                        },
-                        Modifier
-                            .width(165.dp)
-                            .padding(start = 10.dp, top = 10.dp)
-                    ) {
-                        Text(stringResource(R.string.repeat_words), fontSize = 20.sp)
-                    }
-                }
+                repeatWordsViewModel.getEnglishWordsMap()
+                repeatWordsViewModel.updateTranslateList()
+                CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
+                ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
             }
         }
     )
 }
 
 @Composable
-fun PopupWindowDialog(openDialog: Boolean){
-    
+fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
+    repeatWordsViewModel.apply {
+        val countGuess by guessCount.collectAsState()
+        val noCountGuess by noGuessCount.collectAsState()
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 250.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = stringResource(id = R.string.guess_word), fontSize = 25.sp)
+            Text(
+                text = stringResource(id = R.string.no_guess_word),
+                Modifier.padding(start = 20.dp),
+                fontSize = 25.sp
+            )
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 55.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = countGuess.toString(), fontSize = 25.sp)
+            Text(text = noCountGuess.toString(), Modifier.padding(start = 100.dp), fontSize = 25.sp)
+        }
+    }
+}
+
+
+@Composable
+fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
+    repeatWordsViewModel.apply {
+        val mapRandomWords by englishWordsMap.collectAsState()
+        val listTranslateOfWords by translateWordsList.collectAsState()
+        Row(
+            Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = mapRandomWords.keys.first(), fontSize = 25.sp)
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(
+                onClick = {
+                    guessWord(listTranslateOfWords.get(0).word).run { increaseCounts(this) }
+                },
+                Modifier
+                    .width(160.dp)
+                    .padding(top = 10.dp)
+            ) {
+                Text(listTranslateOfWords.get(0).translate, fontSize = 20.sp)
+            }
+            Button(
+                onClick = {
+                    guessWord(listTranslateOfWords.get(1).word).run { increaseCounts(this) }
+                },
+                Modifier
+                    .width(165.dp)
+                    .padding(start = 10.dp, top = 10.dp)
+            ) {
+                Text(listTranslateOfWords.get(1).translate, fontSize = 20.sp)
+            }
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(
+                onClick = {
+                    guessWord(listTranslateOfWords.get(2).word).run { increaseCounts(this) }
+                },
+                Modifier
+                    .width(160.dp)
+                    .padding(top = 10.dp)
+            ) {
+                Text(listTranslateOfWords.get(2).translate, fontSize = 20.sp)
+            }
+            Button(
+                onClick = {
+                    guessWord(listTranslateOfWords.get(3).word).run { increaseCounts(this) }
+                },
+                Modifier
+                    .width(165.dp)
+                    .padding(start = 10.dp, top = 10.dp)
+            ) {
+                Text(listTranslateOfWords.get(3).translate, fontSize = 20.sp)
+            }
+        }
+    }
+}
+
+@Composable
+fun PopupWindowDialog(openDialog: Boolean) {
+
     Box {
         val popupWidth = 300.dp
         val popupHeight = 200.dp

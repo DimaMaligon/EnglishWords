@@ -1,17 +1,12 @@
-package com.example.englishwords
+package com.example.englishwords.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
@@ -31,15 +26,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
+import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
@@ -91,7 +84,7 @@ fun RepeatWordsScreen(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    PopupWindowDialog(openDialog = openDialog)
+                    PopupWindowDialog(openDialog = openDialog, stringResource(id = R.string.text_ifo_about_repeat_words))
                 }
                 repeatWordsViewModel.getEnglishWordsMap()
                 repeatWordsViewModel.updateTranslateList()
@@ -187,50 +180,6 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .padding(start = 10.dp, top = 10.dp)
             ) {
                 Text(listTranslateOfWords.get(3).translate, fontSize = 20.sp)
-            }
-        }
-    }
-}
-
-@Composable
-fun PopupWindowDialog(openDialog: Boolean) {
-
-    Box {
-        val popupWidth = 300.dp
-        val popupHeight = 200.dp
-
-        if (openDialog) {
-            Popup(
-                properties = PopupProperties()
-            ) {
-                Box(
-                    Modifier
-                        .size(popupWidth, popupHeight)
-                        .padding(top = 5.dp)
-                        .background(
-                            MaterialTheme.colorScheme.surfaceVariant,
-                            RoundedCornerShape(10.dp)
-                        )
-                        .border(
-                            2.dp,
-                            color = MaterialTheme.colorScheme.secondary,
-                            RoundedCornerShape(10.dp)
-                        )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.text_ifo_about_app),
-                            modifier = Modifier.padding(vertical = 5.dp),
-                            fontSize = 16.sp
-                        )
-                    }
-                }
             }
         }
     }

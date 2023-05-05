@@ -1,4 +1,4 @@
-package com.example.englishwords
+package com.example.englishwords.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)

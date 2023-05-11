@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
 import com.example.englishwords.navigation.LETTER_ROUTE
@@ -90,7 +89,7 @@ fun StartScreen(
                             .padding(top = 170.dp).height(180.dp).width(280.dp),
                         shape = MaterialTheme.shapes.medium
                     ) {
-                        Text("Словарь", fontSize = 26.sp)
+                        Text("Словарь", style = MaterialTheme.typography.titleMedium)
                     }
                 }
                 Column() {
@@ -102,7 +101,7 @@ fun StartScreen(
                             .padding(top = 10.dp).height(180.dp).width(280.dp),
                         shape = MaterialTheme.shapes.medium
                     ) {
-                        Text("Упражнения", fontSize = 26.sp)
+                        Text("Упражнения", style = MaterialTheme.typography.titleMedium)
                     }
                 }
             }

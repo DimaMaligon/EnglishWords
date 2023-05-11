@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
@@ -22,10 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
@@ -81,30 +82,55 @@ fun WordFields(letterViewModel: LetterViewModel) {
         val englishTranscription by englishTranscription.collectAsState()
 
         Column() {
-            getEnglishList()
             Column {
+                Text(
+                    text = stringResource(id = R.string.english_word),
+                    Modifier.padding(start = 60.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+
                 TextField(
                     value = englishWord,
-                    onValueChange = { setEnglishWord(it) })
+                    onValueChange = { setEnglishWord(it) },
+                    shape = MaterialTheme.shapes.medium,
+                    colors = TextFieldDefaults.textFieldColors(
+                        disabledTextColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    maxLines = 3
+                )
+
+                Text(
+                    text = stringResource(id = R.string.translate_word),
+                    Modifier.padding(start = 50.dp, top = 10.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
 
                 TextField(
                     value = englishTranscription,
                     onValueChange = { setEnglishTranscription(it) },
-                    Modifier.padding(top = 10.dp)
+                    shape = MaterialTheme.shapes.medium,
+                    colors = TextFieldDefaults.textFieldColors(
+                        disabledTextColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    maxLines = 3
                 )
 
                 Button(
                     onClick = {
                         setTap(true)
-                        getEnglishList()
                         setTap(false)
-
                     },
                     Modifier
                         .width(250.dp)
-                        .padding(top = 10.dp)
+                        .padding(top = 10.dp),
                 ) {
-                    Text(stringResource(R.string.save_word), fontSize = 25.sp)
+                    Text(stringResource(R.string.save_word), style = MaterialTheme.typography.titleMedium)
                 }
             }
         }

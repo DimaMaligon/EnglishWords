@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
@@ -84,7 +83,10 @@ fun RepeatWordsScreen(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    PopupWindowDialog(openDialog = openDialog, stringResource(id = R.string.text_ifo_about_repeat_words))
+                    PopupWindowDialog(
+                        openDialog = openDialog,
+                        stringResource(id = R.string.text_ifo_about_repeat_words)
+                    )
                 }
                 repeatWordsViewModel.getEnglishWordsMap()
                 repeatWordsViewModel.updateTranslateList()
@@ -106,11 +108,14 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
                 .padding(top = 250.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = stringResource(id = R.string.guess_word), fontSize = 25.sp)
+            Text(
+                text = stringResource(id = R.string.guess_word),
+                style = MaterialTheme.typography.titleMedium
+            )
             Text(
                 text = stringResource(id = R.string.no_guess_word),
                 Modifier.padding(start = 20.dp),
-                fontSize = 25.sp
+                style = MaterialTheme.typography.titleMedium
             )
         }
         Row(
@@ -119,8 +124,12 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
                 .padding(bottom = 55.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = countGuess.toString(), fontSize = 25.sp)
-            Text(text = noCountGuess.toString(), Modifier.padding(start = 100.dp), fontSize = 25.sp)
+            Text(text = countGuess.toString(), style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = noCountGuess.toString(),
+                Modifier.padding(start = 100.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
@@ -136,7 +145,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = mapRandomWords.keys.first(), fontSize = 25.sp)
+            Text(text = mapRandomWords.keys.first(), style = MaterialTheme.typography.titleMedium)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(
@@ -147,7 +156,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(0).translate, fontSize = 20.sp)
+                Text(listTranslateOfWords.get(0).translate, style = MaterialTheme.typography.titleMedium)
             }
             Button(
                 onClick = {
@@ -157,7 +166,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(1).translate, fontSize = 20.sp)
+                Text(listTranslateOfWords.get(1).translate, style = MaterialTheme.typography.titleMedium)
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -169,7 +178,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(2).translate, fontSize = 20.sp)
+                Text(listTranslateOfWords.get(2).translate, style = MaterialTheme.typography.titleMedium)
             }
             Button(
                 onClick = {
@@ -179,7 +188,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(3).translate, fontSize = 20.sp)
+                Text(listTranslateOfWords.get(3).translate, style = MaterialTheme.typography.titleMedium)
             }
         }
     }

@@ -2,14 +2,18 @@
 <resources>
     <string name="app_name">EnglishWords</string>
     <string name="title_activity_main2">MainActivity2</string>
+
     <string name="save_word">Сохранить</string>
     <string name="repeat_words">Повторить</string>
     <string name="title_screen_letter">Слова на букву</string>
     <string name="title_screen_error">ERROR!!! Буква не найдена</string>
     <string name="title_icon_info">infoIcon</string>
+    <string name="title_icon_enter_words">enterWordsIcon</string>
     <string name="title_icon_back">backIcon</string>
     <string name="guess_word">Угадал</string>
     <string name="no_guess_word">Не угадал</string>
+    <string name="english_word">Слово:</string>
+    <string name="translate_word">Значение:</string>
     <string name="text_ifo_about_repeat_words">Выберите один из вариантов перевода.\nСчетчики указывают количество правильных и неправильных ответов"</string>
     <string name="text_ifo_about_app">Приложение по изучению английского.\nНиже вы можете перейти в \"Словарь\" и добавить слово или \"Упражнение\" и выучить добавленные слова</string>
 </resources>

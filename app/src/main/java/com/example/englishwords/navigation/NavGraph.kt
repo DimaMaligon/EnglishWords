@@ -6,9 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.englishwords.screens.ErrorScreen
-import com.example.englishwords.screens.RepeatWordsScreen
-import com.example.englishwords.screens.StartScreen
-import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
 @Composable
 fun NavGraph(
@@ -16,24 +13,17 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Start.route
+        startDestination = START_ROUTE,
+        route = ROOT_ROUTE
     )
     {
+        navGraphStart(navController)
         navGraphLetter(navController, listViewModel)
+        navGraphRepeatWords(navController,listViewModel)
         composable(
             route = Screens.Error.route
         ) {
             ErrorScreen(navController)
-        }
-        composable(
-            route = Screens.RepeatWords.route
-        ) {
-            RepeatWordsScreen(navController, listViewModel.get(1) as RepeatWordsViewModel)
-        }
-        composable(
-            route = Screens.Start.route
-        ) {
-            StartScreen(navController)
         }
     }
 }

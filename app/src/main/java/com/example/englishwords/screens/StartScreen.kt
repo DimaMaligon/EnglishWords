@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
 import com.example.englishwords.navigation.LETTER_ROUTE
-import com.example.englishwords.navigation.Screens
+import com.example.englishwords.navigation.REPEAT_WORDS_ROUTE
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -96,7 +96,7 @@ fun StartScreen(
                 Column() {
                     Button(
                         onClick = {
-                            navController.navigate(route = Screens.RepeatWords.route)
+                            navController.navigate(route = REPEAT_WORDS_ROUTE)
                         },
                         Modifier
                             .padding(top = 10.dp).height(180.dp).width(280.dp),

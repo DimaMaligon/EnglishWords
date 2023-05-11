@@ -59,7 +59,9 @@ fun ErrorScreen(navController: NavHostController) {
                     text = stringResource(id = R.string.title_screen_error),
                     textAlign = TextAlign.Center,
                     fontSize = 25.sp,
-                    color = Color.Red
+                    color = Color.Red,
+                    fontFamily = fontPlayfair,
+                    fontWeight = FontWeight.Bold
                 )
             }
 

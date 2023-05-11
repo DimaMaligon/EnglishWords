@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 
@@ -55,7 +54,7 @@ fun PopupWindowDialog(openDialog: Boolean, text: String) {
                         Text(
                             text = text,
                             modifier = Modifier.padding(vertical = 5.dp),
-                            fontSize = 16.sp
+                            style = MaterialTheme.typography.titleSmall
                         )
                     }
                 }

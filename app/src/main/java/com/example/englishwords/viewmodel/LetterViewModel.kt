@@ -21,6 +21,10 @@ class LetterViewModel @Inject constructor(val myDbManager: MyDbManager) : ViewMo
     val englishList: StateFlow<List<String>> = englishListMutable
     private val tapMutable = MutableStateFlow(false)
     val tap: StateFlow<Boolean> = tapMutable
+    private val translateWordMutable = MutableStateFlow("")
+    val translateWord: StateFlow<String> = translateWordMutable
+    private val searchWordMutable = MutableStateFlow("")
+    val searchWord: StateFlow<String> = searchWordMutable
 
     fun setLetter(letter: String?) {
         letterMutable.value = letter.toString()
@@ -34,8 +38,19 @@ class LetterViewModel @Inject constructor(val myDbManager: MyDbManager) : ViewMo
         englishTranscriptionMutable.value = word
     }
 
+    fun setSearchWord(word: String) {
+        searchWordMutable.value = word
+    }
+
     fun getEnglishList() {
         englishListMutable.value = myDbManager.readWordsTable(letter.value)
+    }
+    fun setEnglishList(list : List<String>) {
+        englishListMutable.value = list.toMutableList()
+    }
+
+    fun getEnglishTranslateWord(word: String) {
+        translateWordMutable.value = myDbManager.searchWordTable(word = word)
     }
 
     fun setTap(tap: Boolean) {

@@ -45,56 +45,56 @@ fun LetterScreen(
     letter: String?,
     letterViewModel: LetterViewModel
 ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.app_name),
-                            Modifier.padding(),
-                            fontFamily = fontPlayfair,
-                            fontWeight = FontWeight.Normal
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        Modifier.padding(),
+                        fontFamily = fontPlayfair,
+                        fontWeight = FontWeight.Normal
+                    )
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                ),
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate(Screens.EnterWordsScreen.route)
+                    }) {
+                        Icon(
+                            Icons.Filled.Add,
+                            stringResource(id = R.string.title_icon_enter_words)
                         )
-                    },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
-                    ),
-                    actions = {
-                        IconButton(onClick = {
-                            navController.navigate(Screens.EnterWordsScreen.route)
-                        }) {
-                            Icon(
-                                Icons.Filled.Add,
-                                stringResource(id = R.string.title_icon_enter_words)
-                            )
-                        }
-
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(
-                                Icons.Filled.ArrowBack,
-                                stringResource(id = R.string.title_icon_back)
-                            )
-                        }
                     }
-                )
-            },
-            content = { padding ->
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(100.dp)
-                ) {
-                    TitleWords(letterViewModel = letterViewModel)
-                    Search()
-                    Words(letterViewModel = letterViewModel, letterFrom = letter)
-                }
 
-            },
-            containerColor = MaterialTheme.colorScheme.background
-        )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            stringResource(id = R.string.title_icon_back)
+                        )
+                    }
+                }
+            )
+        },
+        content = { padding ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(100.dp)
+            ) {
+                TitleWords(letterViewModel = letterViewModel)
+                Search(letterViewModel = letterViewModel)
+                Words(letterViewModel = letterViewModel, letterFrom = letter)
+            }
+
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    )
 }
 
 @Composable
@@ -109,13 +109,24 @@ fun TitleWords(letterViewModel: LetterViewModel) {
             )
         }
     }
-}@Composable
+}
+
+@Composable
 fun Words(letterViewModel: LetterViewModel, letterFrom: String?) {
     letterViewModel.apply {
         val englishList by englishList.collectAsState()
+        val searchWord by searchWord.collectAsState()
+        val translateWord by translateWord.collectAsState()
         setLetter(letterFrom)
         Column() {
-            getEnglishList()
+            if(searchWord.equals("")){
+                getEnglishList()
+            }
+            else{
+                getEnglishTranslateWord(searchWord)
+                val list = arrayListOf(translateWord)
+                setEnglishList(list)
+            }
             WordList(listWords = englishList)
         }
     }
@@ -142,47 +153,53 @@ fun WordList(listWords: List<String>) {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Search() {
-    Column() {
-        TextField(
-            value = "",
-            onValueChange = { value ->
-                value
-            },
-            leadingIcon = {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(24.dp)
-                )
-            },
-            trailingIcon = {
-                IconButton(
-                    onClick = {
+fun Search(letterViewModel: LetterViewModel) {
+    letterViewModel.apply {
+        val searchWord by searchWord.collectAsState()
+        Column() {
+            TextField(
+                value = searchWord,
+                onValueChange = {
+                    setSearchWord(it)
+                },
+                leadingIcon = {
+                        Icon(
+                            Icons.Default.Search,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(24.dp)
+                        )
+                },
+                trailingIcon = {
+                    if (searchWord != "") {
+                        IconButton(
+                            onClick = {
+                                setSearchWord("")
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.Close,
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .padding(15.dp)
+                                    .size(24.dp)
+                            )
+                        }
                     }
-                ) {
-                    Icon(
-                        Icons.Default.Close,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(15.dp)
-                            .size(24.dp)
-                    )
-                }
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                disabledTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            ),
-            singleLine = true,
-            shape = MaterialTheme.shapes.medium
-        )
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    disabledTextColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                singleLine = true,
+                shape = MaterialTheme.shapes.medium
+            )
+        }
     }
 }
-
 

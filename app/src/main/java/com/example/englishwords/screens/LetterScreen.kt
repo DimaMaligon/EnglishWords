@@ -119,10 +119,9 @@ fun Words(letterViewModel: LetterViewModel, letterFrom: String?) {
         val translateWord by translateWord.collectAsState()
         setLetter(letterFrom)
         Column() {
-            if(searchWord.equals("")){
+            if (searchWord.equals("")) {
                 getEnglishList()
-            }
-            else{
+            } else {
                 getEnglishTranslateWord(searchWord)
                 val list = arrayListOf(translateWord)
                 setEnglishList(list)
@@ -166,12 +165,12 @@ fun Search(letterViewModel: LetterViewModel) {
                     setSearchWord(it)
                 },
                 leadingIcon = {
-                        Icon(
-                            Icons.Default.Search,
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(24.dp)
-                        )
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(24.dp)
+                    )
                 },
                 trailingIcon = {
                     if (searchWord != "") {
@@ -202,4 +201,3 @@ fun Search(letterViewModel: LetterViewModel) {
         }
     }
 }
-

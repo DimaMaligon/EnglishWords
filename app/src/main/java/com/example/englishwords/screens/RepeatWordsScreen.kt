@@ -156,7 +156,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(0).translate, style = MaterialTheme.typography.titleMedium)
+                Text(listTranslateOfWords[0].translate, style = MaterialTheme.typography.titleMedium)
             }
             Button(
                 onClick = {
@@ -166,7 +166,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(1).translate, style = MaterialTheme.typography.titleMedium)
+                Text(listTranslateOfWords[1].translate, style = MaterialTheme.typography.titleMedium)
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -178,7 +178,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(2).translate, style = MaterialTheme.typography.titleMedium)
+                Text(listTranslateOfWords[2].translate, style = MaterialTheme.typography.titleMedium)
             }
             Button(
                 onClick = {
@@ -188,7 +188,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords.get(3).translate, style = MaterialTheme.typography.titleMedium)
+                Text(listTranslateOfWords[3].translate, style = MaterialTheme.typography.titleMedium)
             }
         }
     }

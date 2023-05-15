@@ -88,8 +88,6 @@ fun RepeatWordsScreen(
                         stringResource(id = R.string.text_ifo_about_repeat_words)
                     )
                 }
-                repeatWordsViewModel.getEnglishWordsMap()
-                repeatWordsViewModel.updateTranslateList()
                 CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
                 ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
             }
@@ -102,6 +100,8 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
         val noCountGuess by noGuessCount.collectAsState()
+        getEnglishWordsMap()
+        updateTranslateList()
         Row(
             Modifier
                 .fillMaxWidth()

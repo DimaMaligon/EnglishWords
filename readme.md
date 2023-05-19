@@ -53,15 +53,15 @@
 Тут при выборе верного варианта увеличивается счетчик Угаданных слов или Неугаданных.
 
 <p  align="center">
-<code><img width="30%" src="readme_files/screens_app/guess_word".png></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/guess_word.png"></code>
 </p>
 
 <p  align="center">
-<code><img width="30%" src="readme_files/screens_app/guess_word2".png></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/guess_word2.png"></code>
 </p>
 
 <p  align="center">
-<code><img width="30%" src="readme_files/screens_app/guess_word3".png></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/guess_word3.png"></code>
 </p>
 
 ## Описание файлов проекта

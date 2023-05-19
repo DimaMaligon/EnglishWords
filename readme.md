@@ -5,7 +5,7 @@
 
 <p  align="left">
 <code><img width="5%" title="Compose" src="readme_files/icons_services/compose.png"></code>
-<code><img width="5%" title="Git" src="readme_files/icons_services/git.png"></code>
+<code><img width="5%" title="Git" src="readme_files/icons_services/github.png"></code>
 <code><img width="5%" title="Gradle" src="readme_files/icons_services/gradle.png"></code>
 <code><img width="5%" title="Kotlin" src="readme_files/icons_services/kotlin.png"></code>
 <code><img width="5%" title="MVVM" src="readme_files/icons_services/mvvm.png"></code>
@@ -17,7 +17,9 @@
 
 Для перехода к списку слов тапаем на кнопку ```Словарь```
 
-![](/readme_files/screens_app/main.png)
+<p  align="center">
+<code><img width="50%" title="Hilt" src="readme_files/screens_app/main.png"></code>
+</p>
 
 На этом экране перечислены все буквы английского алфавита.
 Соответственно, что бы посмотреть слова начинающиеся на определенную букву, 

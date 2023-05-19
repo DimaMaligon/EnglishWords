@@ -4,12 +4,12 @@
 ## Стек используемых технологий
 
 <p  align="left">
-<code><img width="5%" title="Compose" src="readmefiles/icons_services/compose.png"></code>
-<code><img width="5%" title="Git" src="readmefiles/icons_services/git.png"></code>
-<code><img width="5%" title="Gradle" src="readmefiles/icons_services/gradle.png"></code>
-<code><img width="5%" title="Kotlin" src="readmefiles/icons_services/kotlin.png"></code>
-<code><img width="5%" title="MVVM" src="readmefiles/icons_services/mvvm.png"></code>
-<code><img width="5%" title="Hilt" src="readmefiles/icons_services/hilt.png"></code>
+<code><img width="5%" title="Compose" src="readme_files/icons_services/compose.png"></code>
+<code><img width="5%" title="Git" src="readme_files/icons_services/git.png"></code>
+<code><img width="5%" title="Gradle" src="readme_files/icons_services/gradle.png"></code>
+<code><img width="5%" title="Kotlin" src="readme_files/icons_services/kotlin.png"></code>
+<code><img width="5%" title="MVVM" src="readme_files/icons_services/mvvm.png"></code>
+<code><img width="5%" title="Hilt" src="readme_files/icons_services/hilt.png"></code>
 
 </p>
 
@@ -17,37 +17,37 @@
 
 Для перехода к списку слов тапаем на кнопку ```Словарь```
 
-![](/readme_resources/screens_app/main.png)
+![](/readme_files/screens_app/main.png)
 
 На этом экране перечислены все буквы английского алфавита.
 Соответственно, что бы посмотреть слова начинающиеся на определенную букву, 
 нужно тапнуть на одну из букв.
 
-![](/readme_resources/screens_app/all_letter.png)
+![](/readme_files/screens_app/all_letter.png)
 
 
 На экране списка слов, есть поиск по слова, список слов и кнопка для добавления слова.
 
-![](/readme_resources/screens_app/all_words_letter.png)
+![](/readme_files/screens_app/all_words_letter.png)
 
 Если мы хотим найти перевод слова из списка, то мы вбиваем его в поиск и нам выводит 
 его перевод на русском языке.
 
-![](/readme_resources/screens_app/search_letter.png)
+![](/readme_files/screens_app/search_letter.png)
 
 Для добавления слова, нам нужно тапнуть на крестик в правом углу и заполнить поля. 
 После чего мы можем сохранить.
 
-![](/readme_resources/screens_app/add_letter.png)
+![](/readme_files/screens_app/add_letter.png)
 
 Чтобы повторить добавленные слова нужно перейти с главного экрана в раздел ```Упражнения```.
 Тут при выборе верного варианта увеличивается счетчик Угаданных слов или Неугаданных.
 
-![](/readme_resources/screens_app/guess_word)
+![](/readme_files/screens_app/guess_word)
 
-![](/readme_resources/screens_app/guess_word2)
+![](/readme_files/screens_app/guess_word2)
 
-![](/readme_resources/screens_app/guess_word3)
+![](/readme_files/screens_app/guess_word3)
 
 ## Описание файлов проекта
 `LetterListScreen.kt` - реализация LazyVerticalGrid, решил, что так проще прокинуть кнопки с английским буквами.

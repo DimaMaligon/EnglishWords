@@ -18,7 +18,7 @@
 Для перехода к списку слов тапаем на кнопку ```Словарь```
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/main.png"></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/main.png"></code>
 </p>
 
 На этом экране перечислены все буквы английского алфавита.
@@ -26,42 +26,42 @@
 нужно тапнуть на одну из букв.
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/all_letter.png"></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/all_letter.png"></code>
 </p>
 
-На экране списка слов, есть поиск по слова, список слов и кнопка для добавления слова.
+На экране Списка слов, есть поиск, список слов и кнопка для добавления слова.
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/all_words_letter.png"></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/all_words_letter.png"></code>
 </p>
 
 Если мы хотим найти перевод слова из списка, то мы вбиваем его в поиск и нам выводит 
 его перевод на русском языке.
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/search_letter.png"></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/search_letter.png"></code>
 </p>
 
 Для добавления слова, нам нужно тапнуть на крестик в правом углу и заполнить поля. 
-После чего мы можем сохранить.
+После чего мы можем его сохранить.
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/add_letter.png"></code>
+<code><img width="30%" title="Hilt" src="readme_files/screens_app/add_letter.png"></code>
 </p>
 
 Чтобы повторить добавленные слова нужно перейти с главного экрана в раздел ```Упражнения```.
 Тут при выборе верного варианта увеличивается счетчик Угаданных слов или Неугаданных.
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word"></code>
+<code><img width="30%" src="readme_files/screens_app/guess_word".png></code>
 </p>
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word2"></code>
+<code><img width="30%" src="readme_files/screens_app/guess_word2".png></code>
 </p>
 
 <p  align="center">
-<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word3"></code>
+<code><img width="30%" src="readme_files/screens_app/guess_word3".png></code>
 </p>
 
 ## Описание файлов проекта

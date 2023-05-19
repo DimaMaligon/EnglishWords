@@ -1,5 +1,19 @@
+# Приложение по изучению Английских слов :
 Приложение переведено на jetpack compose. Изначально писалось с использованием layouts.
 
+## Стек используемых технологий
+
+<p  align="left">
+<code><img width="5%" title="IntelliJ IDEA" src="readmefiles/compose.png"></code>
+<code><img width="5%" title="Java" src="readmefiles/git.png"></code>
+<code><img width="5%" title="Gradle" src="readmefiles/gradle.png"></code>
+<code><img width="5%" title="GitHub" src="readmefiles/kotlin.png"></code>
+<code><img width="5%" title="GitHub" src="readmefiles/mvvm.png"></code>
+
+</p>
+
+
+## Описание файлов проекта
 LetterListScreen.kt - реализация LazyVerticalGrid, решил, что так проще прокинуть кнопки с английским буквами.
 А при тапе на кнопку, будет открываться соответствующий экран буквы.
 

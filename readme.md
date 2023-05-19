@@ -18,38 +18,51 @@
 Для перехода к списку слов тапаем на кнопку ```Словарь```
 
 <p  align="center">
-<code><img width="50%" title="Hilt" src="readme_files/screens_app/main.png"></code>
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/main.png"></code>
 </p>
 
 На этом экране перечислены все буквы английского алфавита.
 Соответственно, что бы посмотреть слова начинающиеся на определенную букву, 
 нужно тапнуть на одну из букв.
 
-![](/readme_files/screens_app/all_letter.png)
-
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/all_letter.png"></code>
+</p>
 
 На экране списка слов, есть поиск по слова, список слов и кнопка для добавления слова.
 
-![](/readme_files/screens_app/all_words_letter.png)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/all_words_letter.png"></code>
+</p>
 
 Если мы хотим найти перевод слова из списка, то мы вбиваем его в поиск и нам выводит 
 его перевод на русском языке.
 
-![](/readme_files/screens_app/search_letter.png)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/search_letter.png"></code>
+</p>
 
 Для добавления слова, нам нужно тапнуть на крестик в правом углу и заполнить поля. 
 После чего мы можем сохранить.
 
-![](/readme_files/screens_app/add_letter.png)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/add_letter.png"></code>
+</p>
 
 Чтобы повторить добавленные слова нужно перейти с главного экрана в раздел ```Упражнения```.
 Тут при выборе верного варианта увеличивается счетчик Угаданных слов или Неугаданных.
 
-![](/readme_files/screens_app/guess_word)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word"></code>
+</p>
 
-![](/readme_files/screens_app/guess_word2)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word2"></code>
+</p>
 
-![](/readme_files/screens_app/guess_word3)
+<p  align="center">
+<code><img width="35%" title="Hilt" src="readme_files/screens_app/guess_word3"></code>
+</p>
 
 ## Описание файлов проекта
 `LetterListScreen.kt` - реализация LazyVerticalGrid, решил, что так проще прокинуть кнопки с английским буквами.

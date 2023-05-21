@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
+import com.example.englishwords.navigation.LETTER_ROUTE
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
@@ -88,8 +89,7 @@ fun RepeatWordsScreen(
                         stringResource(id = R.string.text_ifo_about_repeat_words)
                     )
                 }
-                CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
-                ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
+                RepeatWordsWithAlert(repeatWordsViewModel = repeatWordsViewModel, navController)
             }
         }
     )
@@ -100,7 +100,6 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
         val noCountGuess by noGuessCount.collectAsState()
-        getEnglishWordsMap()
         updateTranslateList()
         Row(
             Modifier
@@ -156,7 +155,10 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords[0].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[0].translate,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
             Button(
                 onClick = {
@@ -166,7 +168,10 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords[1].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[1].translate,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -178,7 +183,10 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords[2].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[2].translate,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
             Button(
                 onClick = {
@@ -188,8 +196,35 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords[3].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[3].translate,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
+    }
+}
+
+@Composable
+fun RepeatAlertDialog(showDialog: Boolean, navController: NavHostController) {
+    SimpleAlertDialog(
+        show = showDialog,
+        title = stringResource(id = R.string.alert_title),
+        text =  stringResource(id = R.string.alert_text),
+        ok = stringResource(id = R.string.alert_ok),
+        
+        onConfirm = {navController.navigate(route = LETTER_ROUTE)}
+    )
+}
+
+@Composable
+fun RepeatWordsWithAlert(repeatWordsViewModel: RepeatWordsViewModel, navController: NavHostController){
+    repeatWordsViewModel.getEnglishWordsMap()
+    val showDialog by repeatWordsViewModel.showDialog.collectAsState()
+    RepeatAlertDialog(showDialog, navController = navController)
+
+    if(!showDialog) {
+        CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
+        ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
     }
 }

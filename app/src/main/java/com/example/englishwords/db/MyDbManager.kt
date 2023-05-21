@@ -26,6 +26,28 @@ class MyDbManager @Inject constructor(application: Application) {
     }
 
     @SuppressLint("Range")
+    fun checkWordsTable(): Boolean{
+        var dataNull = false
+
+        val cursor = db?.query(
+            MyDataBase.TABLE_NAME_WORDS,   // The table to query
+            null,             // The array of columns to return (pass null to get all)
+            null,   // The columns for the WHERE clause
+            null,          // The values for the WHERE clause
+            null,                   // don't group the rows
+            null,                   // don't filter by row groups
+            null               // The sort order
+        )
+
+        val countRow = cursor?.count
+        if(countRow == null || countRow < 4){
+            dataNull = true
+        }
+        cursor?.close()
+        return dataNull
+    }
+
+    @SuppressLint("Range")
     fun readWordsTable(letter: String?): ArrayList<String> {
         val dataList = ArrayList<String>()
 
@@ -39,7 +61,7 @@ class MyDbManager @Inject constructor(application: Application) {
             null               // The sort order
         )
         with(cursor) {
-            while (this?.moveToNext()!!) {
+            while (this?.moveToNext() == true) {
                 val dataWord = getString(getColumnIndex(MyDataBase.WORDS_OF_LETTER))
                 val dataTranslate = getString(getColumnIndex(MyDataBase.TRANSLATE_OF_WORD))
                 dataList.add("$dataWord - $dataTranslate")

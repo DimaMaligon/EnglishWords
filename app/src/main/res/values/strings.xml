@@ -16,4 +16,7 @@
     <string name="translate_word">Значение:</string>
     <string name="text_ifo_about_repeat_words">Выберите один из вариантов перевода.\nСчетчики указывают количество правильных и неправильных ответов"</string>
     <string name="text_ifo_about_app">Приложение по изучению английского.\nНиже вы можете перейти в \"Словарь\" и добавить слово или \"Упражнение\" и выучить добавленные слова</string>
+    <string name="alert_ok">Хорошо</string>
+    <string name="alert_title">Не хватает слов</string>
+    <string name="alert_text">Словарь пуст или в нем меньше 4 слов.\nДобавьте больше слов в словарь</string>
 </resources>

@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,5 +62,32 @@ fun PopupWindowDialog(openDialog: Boolean, text: String) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SimpleAlertDialog(
+    show: Boolean,
+    title: String,
+    text: String,
+    ok: String,
+    onConfirm: () -> Unit
+) {
+    if (show) {
+        AlertDialog(
+            onDismissRequest = {},
+            confirmButton = {
+                TextButton(onClick = onConfirm, Modifier.padding(end = 100.dp).background(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.primary))
+                {
+                    Text(
+                        text = ok,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
+            },
+            title = { Text(text = title, Modifier.padding(start = 30.dp)) },
+            text = { Text(text = text) }
+        )
     }
 }

@@ -22,9 +22,15 @@ class RepeatWordsViewModel @Inject constructor(val myDbManager: MyDbManager) : V
     private val translateWordsListMutable: MutableStateFlow<MutableList<EnglishWord>> =
         MutableStateFlow(mutableListOf())
     val translateWordsList: MutableStateFlow<MutableList<EnglishWord>> = translateWordsListMutable
+    private val showDialogMutable = MutableStateFlow(false)
+    val showDialog: StateFlow<Boolean> = showDialogMutable
 
     fun getEnglishWordsMap() {
-        englishWordsMapMutable.value = myDbManager.readRandomWordsTable()
+        if (myDbManager.checkWordsTable()) {
+            onOpenDialogClicked()
+        } else {
+            englishWordsMapMutable.value = myDbManager.readRandomWordsTable()
+        }
     }
 
     fun updateTranslateList() {
@@ -65,5 +71,17 @@ class RepeatWordsViewModel @Inject constructor(val myDbManager: MyDbManager) : V
             true -> guessCountMutable.value++
             false -> noGuessCountMutable.value++
         }
+    }
+
+    fun onOpenDialogClicked() {
+        showDialogMutable.value = true
+    }
+
+    fun onDialogConfirm() {
+        showDialogMutable.value = false
+    }
+
+    fun onDialogDismiss() {
+        showDialogMutable.value = false
     }
 }

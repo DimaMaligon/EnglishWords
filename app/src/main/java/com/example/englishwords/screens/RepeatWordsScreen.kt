@@ -32,67 +32,58 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.englishwords.R
+import com.example.englishwords.navigation.LETTER_ROUTE
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RepeatWordsScreen(
-    navController: NavHostController,
-    repeatWordsViewModel: RepeatWordsViewModel
+    navController: NavHostController, repeatWordsViewModel: RepeatWordsViewModel
 ) {
     var openDialog by remember { mutableStateOf(false) }
     Scaffold(topBar = {
-        TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    Modifier.padding(),
-                    fontFamily = fontPlayfair,
-                    fontWeight = FontWeight.Normal
-                )
-            },
-            actions = {
-                IconButton(onClick = {
-                    openDialog = !openDialog
-                }) {
-                    Icon(Icons.Filled.Info, stringResource(id = R.string.title_icon_info))
-                }
-
-            },
-            navigationIcon = {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.title_icon_info))
-                }
-            },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+        TopAppBar(title = {
+            Text(
+                text = stringResource(id = R.string.app_name),
+                Modifier.padding(),
+                fontFamily = fontPlayfair,
+                fontWeight = FontWeight.Normal
             )
-        )
-    },
-        content = { padding ->
-            Column(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            ) {
-                Row(
-                    Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    PopupWindowDialog(
-                        openDialog = openDialog,
-                        stringResource(id = R.string.text_ifo_about_repeat_words)
-                    )
-                }
-                CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
-                ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
+        }, actions = {
+            IconButton(onClick = {
+                openDialog = !openDialog
+            }) {
+                Icon(Icons.Filled.Info, stringResource(id = R.string.title_icon_info))
             }
+
+        }, navigationIcon = {
+            IconButton(onClick = {
+                navController.popBackStack()
+            }) {
+                Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.title_icon_info))
+            }
+        }, colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+        )
+        )
+    }, content = { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+        ) {
+            Row(
+                Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+            ) {
+                PopupWindowDialog(
+                    openDialog = openDialog,
+                    stringResource(id = R.string.text_ifo_about_repeat_words)
+                )
+            }
+            RepeatWordsWithAlert(repeatWordsViewModel = repeatWordsViewModel, navController)
         }
-    )
+    })
 }
 
 @Composable
@@ -100,7 +91,6 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
         val noCountGuess by noGuessCount.collectAsState()
-        getEnglishWordsMap()
         updateTranslateList()
         Row(
             Modifier
@@ -141,9 +131,7 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
         val mapRandomWords by englishWordsMap.collectAsState()
         val listTranslateOfWords by translateWordsList.collectAsState()
         Row(
-            Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
             Text(text = mapRandomWords.keys.first(), style = MaterialTheme.typography.titleMedium)
         }
@@ -156,7 +144,9 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords[0].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[0].translate, style = MaterialTheme.typography.titleMedium
+                )
             }
             Button(
                 onClick = {
@@ -166,7 +156,9 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords[1].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[1].translate, style = MaterialTheme.typography.titleMedium
+                )
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -178,7 +170,9 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
-                Text(listTranslateOfWords[2].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[2].translate, style = MaterialTheme.typography.titleMedium
+                )
             }
             Button(
                 onClick = {
@@ -188,8 +182,34 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
-                Text(listTranslateOfWords[3].translate, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    listTranslateOfWords[3].translate, style = MaterialTheme.typography.titleMedium
+                )
             }
         }
+    }
+}
+
+@Composable
+fun RepeatAlertDialog(showDialog: Boolean, navController: NavHostController) {
+    SimpleAlertDialog(show = showDialog,
+        title = stringResource(id = R.string.alert_title),
+        text = stringResource(id = R.string.alert_text),
+        ok = stringResource(id = R.string.alert_ok),
+
+        onConfirm = { navController.navigate(route = LETTER_ROUTE) })
+}
+
+@Composable
+fun RepeatWordsWithAlert(
+    repeatWordsViewModel: RepeatWordsViewModel, navController: NavHostController
+) {
+    repeatWordsViewModel.getEnglishWordsMap()
+    val showDialog by repeatWordsViewModel.showDialog.collectAsState()
+    RepeatAlertDialog(showDialog, navController = navController)
+
+    if (!showDialog) {
+        CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
+        ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
     }
 }

@@ -77,7 +77,15 @@ fun SimpleAlertDialog(
         AlertDialog(
             onDismissRequest = {},
             confirmButton = {
-                TextButton(onClick = onConfirm, Modifier.padding(end = 100.dp).background(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.primary))
+                TextButton(
+                    onClick = onConfirm,
+                    Modifier
+                        .padding(end = 100.dp)
+                        .background(
+                            shape = MaterialTheme.shapes.small,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                )
                 {
                     Text(
                         text = ok,

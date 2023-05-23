@@ -26,10 +26,9 @@ class RepeatWordsViewModel @Inject constructor(val myDbManager: MyDbManager) : V
     val showDialog: StateFlow<Boolean> = showDialogMutable
 
     fun getEnglishWordsMap() {
-        if(myDbManager.checkWordsTable()){
+        if (myDbManager.checkWordsTable()) {
             onOpenDialogClicked()
-        }
-        else {
+        } else {
             englishWordsMapMutable.value = myDbManager.readRandomWordsTable()
         }
     }

@@ -32,19 +32,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.englishwords.LocalLetterViewModel
+import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
 import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
-import com.example.englishwords.viewmodel.LetterViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LetterScreen(
-    navController: NavHostController,
-    letter: String?,
-    letterViewModel: LetterViewModel
+    letter: String?
 ) {
+    val navController = LocalNavController.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -87,9 +86,9 @@ fun LetterScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(100.dp)
             ) {
-                TitleWords(letterViewModel = letterViewModel)
-                Search(letterViewModel = letterViewModel)
-                Words(letterViewModel = letterViewModel, letterFrom = letter)
+                TitleWords()
+                Search()
+                Words(letterFrom = letter)
             }
 
         },
@@ -98,7 +97,8 @@ fun LetterScreen(
 }
 
 @Composable
-fun TitleWords(letterViewModel: LetterViewModel) {
+fun TitleWords() {
+    val letterViewModel = LocalLetterViewModel.current
     letterViewModel.apply {
         val letterScreen by letter.collectAsState()
         Column(modifier = Modifier.padding(bottom = 15.dp)) {
@@ -112,7 +112,8 @@ fun TitleWords(letterViewModel: LetterViewModel) {
 }
 
 @Composable
-fun Words(letterViewModel: LetterViewModel, letterFrom: String?) {
+fun Words(letterFrom: String?) {
+    val letterViewModel = LocalLetterViewModel.current
     letterViewModel.apply {
         val englishList by englishList.collectAsState()
         val searchWord by searchWord.collectAsState()
@@ -155,7 +156,8 @@ fun WordList(listWords: List<String>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Search(letterViewModel: LetterViewModel) {
+fun Search() {
+    val letterViewModel = LocalLetterViewModel.current
     letterViewModel.apply {
         val searchWord by searchWord.collectAsState()
         Column() {

@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
 import com.example.englishwords.data.Alphabet
 import com.example.englishwords.navigation.Screens
@@ -43,7 +44,8 @@ object Constants {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LetterListScreen(navController: NavHostController) {
+fun LetterListScreen() {
+    val navController = LocalNavController.current
     val letters = remember {
         Alphabet.listLetters
     }

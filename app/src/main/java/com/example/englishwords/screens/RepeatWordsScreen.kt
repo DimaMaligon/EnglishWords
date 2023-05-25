@@ -30,18 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.englishwords.LocalNavController
+import com.example.englishwords.LocalRepeatViewModel
 import com.example.englishwords.R
 import com.example.englishwords.navigation.LETTER_ROUTE
 import com.example.englishwords.ui.theme.fontPlayfair
-import com.example.englishwords.viewmodel.RepeatWordsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RepeatWordsScreen(
-    navController: NavHostController, repeatWordsViewModel: RepeatWordsViewModel
-) {
+fun RepeatWordsScreen() {
+    val navController = LocalNavController.current
     var openDialog by remember { mutableStateOf(false) }
+
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
@@ -81,13 +81,14 @@ fun RepeatWordsScreen(
                     stringResource(id = R.string.text_ifo_about_repeat_words)
                 )
             }
-            RepeatWordsWithAlert(repeatWordsViewModel = repeatWordsViewModel, navController)
+            RepeatWordsWithAlert()
         }
     })
 }
 
 @Composable
-fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
+fun CountsGuessWords() {
+    val repeatWordsViewModel = LocalRepeatViewModel.current
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
         val noCountGuess by noGuessCount.collectAsState()
@@ -126,7 +127,8 @@ fun CountsGuessWords(repeatWordsViewModel: RepeatWordsViewModel) {
 
 
 @Composable
-fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
+fun ButtonsEnglishWords() {
+    val repeatWordsViewModel = LocalRepeatViewModel.current
     repeatWordsViewModel.apply {
         val mapRandomWords by englishWordsMap.collectAsState()
         val listTranslateOfWords by translateWordsList.collectAsState()
@@ -191,7 +193,8 @@ fun ButtonsEnglishWords(repeatWordsViewModel: RepeatWordsViewModel) {
 }
 
 @Composable
-fun RepeatAlertDialog(showDialog: Boolean, navController: NavHostController) {
+fun RepeatAlertDialog(showDialog: Boolean) {
+    val navController = LocalNavController.current
     SimpleAlertDialog(show = showDialog,
         title = stringResource(id = R.string.alert_title),
         text = stringResource(id = R.string.alert_text),
@@ -201,15 +204,14 @@ fun RepeatAlertDialog(showDialog: Boolean, navController: NavHostController) {
 }
 
 @Composable
-fun RepeatWordsWithAlert(
-    repeatWordsViewModel: RepeatWordsViewModel, navController: NavHostController
-) {
+fun RepeatWordsWithAlert() {
+    val repeatWordsViewModel = LocalRepeatViewModel.current
     repeatWordsViewModel.getEnglishWordsMap()
     val showDialog by repeatWordsViewModel.showDialog.collectAsState()
-    RepeatAlertDialog(showDialog, navController = navController)
+    RepeatAlertDialog(showDialog)
 
     if (!showDialog) {
-        CountsGuessWords(repeatWordsViewModel = repeatWordsViewModel)
-        ButtonsEnglishWords(repeatWordsViewModel = repeatWordsViewModel)
+        CountsGuessWords()
+        ButtonsEnglishWords()
     }
 }

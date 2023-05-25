@@ -27,17 +27,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.englishwords.LocalLetterViewModel
+import com.example.englishwords.LocalNavController
+import com.example.englishwords.LocalRepeatViewModel
 import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.LetterViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnterWordsScreen(
-    navController: NavHostController,
-    letterViewModel: LetterViewModel
-) {
+fun EnterWordsScreen() {
+    val letterViewModel = LocalLetterViewModel.current
+    val viewRepeatWord = LocalRepeatViewModel.current
+    val navController = LocalNavController.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -130,7 +132,10 @@ fun WordFields(letterViewModel: LetterViewModel) {
                         .width(250.dp)
                         .padding(top = 10.dp),
                 ) {
-                    Text(stringResource(R.string.save_word), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        stringResource(R.string.save_word),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             }
         }

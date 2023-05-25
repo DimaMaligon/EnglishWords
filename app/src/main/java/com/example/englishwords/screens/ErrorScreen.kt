@@ -22,13 +22,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ErrorScreen(navController: NavHostController) {
+fun ErrorScreen() {
+    val navController = LocalNavController.current
     Scaffold(
         topBar = {
             TopAppBar(

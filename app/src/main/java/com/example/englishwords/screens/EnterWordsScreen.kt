@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.englishwords.LocalLetterViewModel
 import com.example.englishwords.LocalNavController
-import com.example.englishwords.LocalRepeatViewModel
 import com.example.englishwords.R
 import com.example.englishwords.ui.theme.fontPlayfair
 import com.example.englishwords.viewmodel.LetterViewModel
@@ -38,7 +37,6 @@ import com.example.englishwords.viewmodel.LetterViewModel
 @Composable
 fun EnterWordsScreen() {
     val letterViewModel = LocalLetterViewModel.current
-    val viewRepeatWord = LocalRepeatViewModel.current
     val navController = LocalNavController.current
     Scaffold(
         topBar = {

@@ -153,7 +153,6 @@ fun WordList(listWords: List<String>) {
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Search() {

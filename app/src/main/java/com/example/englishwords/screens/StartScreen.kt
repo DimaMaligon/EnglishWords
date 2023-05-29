@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
 import com.example.englishwords.navigation.LETTER_ROUTE
 import com.example.englishwords.navigation.REPEAT_WORDS_ROUTE
@@ -37,9 +37,8 @@ import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(
-    navController: NavHostController
-) {
+fun StartScreen() {
+    val navController = LocalNavController.current
     var openDialog by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {

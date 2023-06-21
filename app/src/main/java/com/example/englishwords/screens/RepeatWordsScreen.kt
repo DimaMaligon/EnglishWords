@@ -135,7 +135,10 @@ fun ButtonsEnglishWords() {
         Row(
             Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = listRandomWords.first().wordEnglish, style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = listRandomWords.first().wordEnglish,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(
@@ -199,7 +202,6 @@ fun RepeatAlertDialog(showDialog: Boolean) {
         title = stringResource(id = R.string.alert_title),
         text = stringResource(id = R.string.alert_text),
         ok = stringResource(id = R.string.alert_ok),
-
         onConfirm = { navController.navigate(route = LETTER_ROUTE) })
 }
 

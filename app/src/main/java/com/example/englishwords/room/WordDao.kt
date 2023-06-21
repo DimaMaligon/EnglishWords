@@ -20,6 +20,6 @@ interface WordDao {
     @Query("SELECT * FROM word ORDER BY RANDOM() LIMIT 4")
     suspend fun readRandomWords(): MutableList<Word>
 
-    @Query("SELECT * FROM word WHERE wordEnglish = :wordSearch")
+    @Query("SELECT * FROM word WHERE wordEnglish LIKE '%' || :wordSearch || '%'")
     suspend fun searchWord(wordSearch: String): Word
 }

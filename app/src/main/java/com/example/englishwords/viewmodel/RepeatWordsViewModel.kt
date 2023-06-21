@@ -1,65 +1,53 @@
 package com.example.englishwords.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.englishwords.data.EnglishWord
-import com.example.englishwords.db.MyDbManager
+import androidx.lifecycle.viewModelScope
+import com.example.englishwords.room.DbManager
+import com.example.englishwords.room.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RepeatWordsViewModel @Inject constructor(val myDbManager: MyDbManager) : ViewModel() {
-
+class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewModel() {
+    private val daoData = dbManager.getDao()
 
     private val guessCountMutable = MutableStateFlow(0)
     val guessCount: StateFlow<Int> = guessCountMutable
     private val noGuessCountMutable = MutableStateFlow(0)
     val noGuessCount: StateFlow<Int> = noGuessCountMutable
-    private val englishWordsMapMutable: MutableStateFlow<MutableMap<String, String>> =
-        MutableStateFlow(mutableMapOf())
-    val englishWordsMap: StateFlow<Map<String, String>> = englishWordsMapMutable
-    private val translateWordsListMutable: MutableStateFlow<MutableList<EnglishWord>> =
+    private val englishWordsListMutable: MutableStateFlow<MutableList<Word>> =
         MutableStateFlow(mutableListOf())
-    val translateWordsList: MutableStateFlow<MutableList<EnglishWord>> = translateWordsListMutable
+    val englishWordsList: StateFlow<MutableList<Word>> = englishWordsListMutable
+    private val shuffleWordsListMutable: MutableStateFlow<MutableList<Word>> =
+        MutableStateFlow(mutableListOf())
+    val shuffleWordsList: MutableStateFlow<MutableList<Word>> = shuffleWordsListMutable
     private val showDialogMutable = MutableStateFlow(false)
     val showDialog: StateFlow<Boolean> = showDialogMutable
 
     fun getEnglishWordsMap() {
-        if (myDbManager.checkWordsTable()) {
-            onOpenDialogClicked()
-        } else {
-            englishWordsMapMutable.value = myDbManager.readRandomWordsTable()
+//        if (dbManager.checkWordsTable()) {
+//            onOpenDialogClicked()
+//        } else {
+        viewModelScope.launch {
+            englishWordsListMutable.value = daoData.readRandomWords()
         }
     }
 
     fun updateTranslateList() {
-        val listTranscription = ArrayList<EnglishWord>()
-        englishWordsMapMutable.value.let { it ->
-            var firsKey = it.keys.first()
-            it.forEach {
-                listTranscription.add(
-                    EnglishWord(
-                        it.key,
-                        it.value,
-                        when (it.key) {
-                            firsKey -> true
-                            else -> false
-                        }
-                    )
-                )
-            }
-        }
-        translateWordsListMutable.value = listTranscription.apply { shuffle() }
+        val listTranscription = englishWordsListMutable.value
+        shuffleWordsListMutable.value = listTranscription.apply { shuffle() }
     }
 
 
-    fun guessWord(word: String): Boolean {
-        translateWordsListMutable.value
+    fun guessWord(word: Word): Boolean {
+        shuffleWordsListMutable.value
             .let {
                 it.forEach { element ->
-                    if (element.word == word) {
-                        return element.rightTranslate
+                    if (element.wordEnglish == word.wordEnglish) {
+                        return true
                     }
                 }
             }

@@ -14,7 +14,6 @@ import com.example.englishwords.viewmodel.LetterViewModel
 import com.example.englishwords.viewmodel.RepeatWordsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 val LocalLetterViewModel = compositionLocalOf<LetterViewModel> { error("No List Views") }
 val LocalRepeatViewModel = compositionLocalOf<RepeatWordsViewModel> { error("No List Views") }
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController") }

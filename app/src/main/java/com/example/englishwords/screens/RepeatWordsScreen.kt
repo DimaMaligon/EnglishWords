@@ -130,62 +130,65 @@ fun CountsGuessWords() {
 fun ButtonsEnglishWords() {
     val repeatWordsViewModel = LocalRepeatViewModel.current
     repeatWordsViewModel.apply {
-        val mapRandomWords by englishWordsMap.collectAsState()
-        val listTranslateOfWords by translateWordsList.collectAsState()
+        val listRandomWords by englishWordsList.collectAsState()
+        val listShuffleWords by shuffleWordsList.collectAsState()
         Row(
             Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = mapRandomWords.keys.first(), style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = listRandomWords.first().wordEnglish,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(
                 onClick = {
-                    guessWord(listTranslateOfWords.get(0).word).run { increaseCounts(this) }
+                    guessWord(listShuffleWords.get(0)).run { increaseCounts(this) }
                 },
                 Modifier
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
                 Text(
-                    listTranslateOfWords[0].translate, style = MaterialTheme.typography.titleMedium
+                    listShuffleWords[0].translate, style = MaterialTheme.typography.titleMedium
                 )
             }
             Button(
                 onClick = {
-                    guessWord(listTranslateOfWords.get(1).word).run { increaseCounts(this) }
+                    guessWord(listShuffleWords.get(1)).run { increaseCounts(this) }
                 },
                 Modifier
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
                 Text(
-                    listTranslateOfWords[1].translate, style = MaterialTheme.typography.titleMedium
+                    listShuffleWords[1].translate, style = MaterialTheme.typography.titleMedium
                 )
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(
                 onClick = {
-                    guessWord(listTranslateOfWords.get(2).word).run { increaseCounts(this) }
+                    guessWord(listShuffleWords.get(2)).run { increaseCounts(this) }
                 },
                 Modifier
                     .width(160.dp)
                     .padding(top = 10.dp)
             ) {
                 Text(
-                    listTranslateOfWords[2].translate, style = MaterialTheme.typography.titleMedium
+                    listShuffleWords[2].translate, style = MaterialTheme.typography.titleMedium
                 )
             }
             Button(
                 onClick = {
-                    guessWord(listTranslateOfWords.get(3).word).run { increaseCounts(this) }
+                    guessWord(listShuffleWords.get(3)).run { increaseCounts(this) }
                 },
                 Modifier
                     .width(165.dp)
                     .padding(start = 10.dp, top = 10.dp)
             ) {
                 Text(
-                    listTranslateOfWords[3].translate, style = MaterialTheme.typography.titleMedium
+                    listShuffleWords[3].translate, style = MaterialTheme.typography.titleMedium
                 )
             }
         }
@@ -199,7 +202,6 @@ fun RepeatAlertDialog(showDialog: Boolean) {
         title = stringResource(id = R.string.alert_title),
         text = stringResource(id = R.string.alert_text),
         ok = stringResource(id = R.string.alert_ok),
-
         onConfirm = { navController.navigate(route = LETTER_ROUTE) })
 }
 

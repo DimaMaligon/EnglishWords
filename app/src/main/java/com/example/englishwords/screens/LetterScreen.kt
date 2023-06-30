@@ -36,6 +36,7 @@ import com.example.englishwords.LocalLetterViewModel
 import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
 import com.example.englishwords.navigation.Screens
+import com.example.englishwords.room.Word
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -124,8 +125,8 @@ fun Words(letterFrom: String?) {
                 getEnglishList()
             } else {
                 getEnglishTranslateWord(searchWord)
-                val list = arrayListOf(translateWord)
-                setEnglishList(list)
+                val wordTranslateList = arrayListOf(translateWord)
+                setEnglishList(wordTranslateList as List<Word>)
             }
             WordList(listWords = englishList)
         }
@@ -133,7 +134,7 @@ fun Words(letterFrom: String?) {
 }
 
 @Composable
-fun WordList(listWords: List<String>) {
+fun WordList(listWords: List<Word>) {
     LazyColumn(
         modifier = Modifier
             .padding(8.dp)
@@ -142,13 +143,12 @@ fun WordList(listWords: List<String>) {
     ) {
         items(listWords) {
             Text(
-                text = it,
+                text = "${it.wordEnglish} - ${it.translate}",
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .shadow(15.dp),
                 maxLines = 3
             )
-
         }
     }
 }

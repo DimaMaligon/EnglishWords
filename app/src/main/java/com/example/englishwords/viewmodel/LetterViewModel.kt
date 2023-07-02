@@ -62,10 +62,8 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
 
     fun getEnglishTranslateWord(word: String) {
         viewModelScope.launch {
-            var word = daoData.searchWord(word)
-//            if(word != null){
+            val word = daoData.searchWord(word)
                 translateWordMutable.value = word
-//            }
         }
     }
 

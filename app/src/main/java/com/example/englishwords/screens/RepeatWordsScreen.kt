@@ -1,5 +1,6 @@
 package com.example.englishwords.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +36,7 @@ import com.example.englishwords.LocalNavController
 import com.example.englishwords.LocalRepeatViewModel
 import com.example.englishwords.R
 import com.example.englishwords.navigation.LETTER_ROUTE
+import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -132,6 +135,24 @@ fun ButtonsEnglishWords() {
     repeatWordsViewModel.apply {
         val listRandomWords by englishWordsList.collectAsState()
         val listShuffleWords by shuffleWordsList.collectAsState()
+
+//        LazyVerticalGrid(columns = GridCells.Adaptive(100.dp), content = {
+//            items(listShuffleWords.size) { index ->
+//                Button(
+//                    onClick = {
+//                        guessWord(listShuffleWords[index]).run { increaseCounts(this) }
+//                    },
+//                    Modifier
+//                        .width(160.dp)
+//                        .padding(top = 10.dp)
+//                ) {
+//                    Text(
+//                        listShuffleWords[0].translate, style = MaterialTheme.typography.titleMedium
+//                    )
+//                }
+//            }
+//        })
+
         Row(
             Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
@@ -195,6 +216,7 @@ fun ButtonsEnglishWords() {
     }
 }
 
+@SuppressLint("ResourceType")
 @Composable
 fun RepeatAlertDialog(showDialog: Boolean) {
     val navController = LocalNavController.current
@@ -202,18 +224,41 @@ fun RepeatAlertDialog(showDialog: Boolean) {
         title = stringResource(id = R.string.alert_title),
         text = stringResource(id = R.string.alert_text),
         ok = stringResource(id = R.string.alert_ok),
-        onConfirm = { navController.navigate(route = LETTER_ROUTE) })
+        onConfirm = {
+            navController.navigate(route = LETTER_ROUTE){
+                popUpTo(route = Screens.RepeatWords.route){
+                    inclusive = true
+                }
+            }
+        })
 }
 
+@SuppressLint(
+    "CoroutineCreationDuringComposition", "ProduceStateDoesNotAssignValue",
+    "StateFlowValueCalledInComposition"
+)
 @Composable
 fun RepeatWordsWithAlert() {
     val repeatWordsViewModel = LocalRepeatViewModel.current
-    repeatWordsViewModel.getEnglishWordsMap()
-    val showDialog by repeatWordsViewModel.showDialog.collectAsState()
-    RepeatAlertDialog(showDialog)
+    repeatWordsViewModel.apply {
+        val showProgress by showProgress.collectAsState()
+        val showDialog by showDialog.collectAsState()
 
-    if (!showDialog) {
-        CountsGuessWords()
-        ButtonsEnglishWords()
+        LaunchedEffect(key1 = true){
+            getEnglishWordsMap()
+        }
+
+        if (showProgress) {
+            SimpleAlertCircularProgressIndicator(show = true) {
+            }
+        } else {
+            RepeatAlertDialog(showDialog)
+
+            if (!showDialog) {
+                CountsGuessWords()
+                ButtonsEnglishWords()
+
+            }
+        }
     }
 }

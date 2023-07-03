@@ -14,6 +14,9 @@ interface WordDao {
     @Query("SELECT COUNT(*) FROM word")
     suspend fun checkWordsTable(): Int
 
+    @Query("SELECT (SELECT COUNT(*) FROM word) == 0")
+    fun checkIsEmpty(): Boolean
+
     @Query("SELECT * FROM word WHERE letter = :letterScreen")
     suspend fun readWordsLetter(letterScreen: String): MutableList<Word>
 

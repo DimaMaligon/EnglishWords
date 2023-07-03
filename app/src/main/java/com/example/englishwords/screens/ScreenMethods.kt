@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -97,5 +98,15 @@ fun SimpleAlertDialog(
             title = { Text(text = title, Modifier.padding(start = 30.dp)) },
             text = { Text(text = text) }
         )
+    }
+}
+
+@Composable
+fun SimpleAlertCircularProgressIndicator(
+    show: Boolean,
+    onConfirm: () -> Unit
+) {
+    if (show){
+        CircularProgressIndicator(progress = 50.0f)
     }
 }

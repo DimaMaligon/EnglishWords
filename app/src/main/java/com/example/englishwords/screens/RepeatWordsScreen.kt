@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
@@ -94,36 +96,45 @@ fun CountsGuessWords() {
     val repeatWordsViewModel = LocalRepeatViewModel.current
     repeatWordsViewModel.apply {
         val countGuess by guessCount.collectAsState()
-        val noCountGuess by noGuessCount.collectAsState()
-        updateTranslateList()
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 250.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.guess_word),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(id = R.string.no_guess_word),
-                Modifier.padding(start = 20.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 55.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(text = countGuess.toString(), style = MaterialTheme.typography.titleMedium)
-            Text(
-                text = noCountGuess.toString(),
-                Modifier.padding(start = 100.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
+        val noGuessCount by noGuessCount.collectAsState()
+        val showProgress by showProgress.collectAsState()
+
+        if (showProgress) {
+            SimpleAlertCircularProgressIndicator(show = true) {
+            }
+        } else {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 250.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.guess_word),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(id = R.string.no_guess_word),
+                    Modifier.padding(start = 20.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 55.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = countGuess.toString(),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = noGuessCount.toString(),
+                    Modifier.padding(start = 100.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }
@@ -136,23 +147,6 @@ fun ButtonsEnglishWords() {
         val listRandomWords by englishWordsList.collectAsState()
         val listShuffleWords by shuffleWordsList.collectAsState()
 
-//        LazyVerticalGrid(columns = GridCells.Adaptive(100.dp), content = {
-//            items(listShuffleWords.size) { index ->
-//                Button(
-//                    onClick = {
-//                        guessWord(listShuffleWords[index]).run { increaseCounts(this) }
-//                    },
-//                    Modifier
-//                        .width(160.dp)
-//                        .padding(top = 10.dp)
-//                ) {
-//                    Text(
-//                        listShuffleWords[0].translate, style = MaterialTheme.typography.titleMedium
-//                    )
-//                }
-//            }
-//        })
-
         Row(
             Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
@@ -161,58 +155,25 @@ fun ButtonsEnglishWords() {
                 style = MaterialTheme.typography.titleMedium
             )
         }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Button(
-                onClick = {
-                    guessWord(listShuffleWords.get(0)).run { increaseCounts(this) }
-                },
-                Modifier
-                    .width(160.dp)
-                    .padding(top = 10.dp)
-            ) {
-                Text(
-                    listShuffleWords[0].translate, style = MaterialTheme.typography.titleMedium
-                )
+
+        LazyVerticalGrid(columns = GridCells.Adaptive(200.dp), content = {
+            items(listShuffleWords.size) { index ->
+                Button(
+                    onClick = {
+                        guessWord(listShuffleWords[index]).run { increaseCounts(this) }
+                        val v = !keyLaunchRepeat.value
+                        setLaunchKeyRepeat(v)
+                    },
+                    Modifier
+                        .width(160.dp)
+                        .padding(top = 10.dp)
+                ) {
+                    Text(
+                        listShuffleWords[index].translate, style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
-            Button(
-                onClick = {
-                    guessWord(listShuffleWords.get(1)).run { increaseCounts(this) }
-                },
-                Modifier
-                    .width(165.dp)
-                    .padding(start = 10.dp, top = 10.dp)
-            ) {
-                Text(
-                    listShuffleWords[1].translate, style = MaterialTheme.typography.titleMedium
-                )
-            }
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Button(
-                onClick = {
-                    guessWord(listShuffleWords.get(2)).run { increaseCounts(this) }
-                },
-                Modifier
-                    .width(160.dp)
-                    .padding(top = 10.dp)
-            ) {
-                Text(
-                    listShuffleWords[2].translate, style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Button(
-                onClick = {
-                    guessWord(listShuffleWords.get(3)).run { increaseCounts(this) }
-                },
-                Modifier
-                    .width(165.dp)
-                    .padding(start = 10.dp, top = 10.dp)
-            ) {
-                Text(
-                    listShuffleWords[3].translate, style = MaterialTheme.typography.titleMedium
-                )
-            }
-        }
+        })
     }
 }
 
@@ -225,8 +186,8 @@ fun RepeatAlertDialog(showDialog: Boolean) {
         text = stringResource(id = R.string.alert_text),
         ok = stringResource(id = R.string.alert_ok),
         onConfirm = {
-            navController.navigate(route = LETTER_ROUTE){
-                popUpTo(route = Screens.RepeatWords.route){
+            navController.navigate(route = LETTER_ROUTE) {
+                popUpTo(route = Screens.RepeatWords.route) {
                     inclusive = true
                 }
             }
@@ -243,9 +204,11 @@ fun RepeatWordsWithAlert() {
     repeatWordsViewModel.apply {
         val showProgress by showProgress.collectAsState()
         val showDialog by showDialog.collectAsState()
+        val keyLaunch by keyLaunchRepeat.collectAsState()
 
-        LaunchedEffect(key1 = true){
+        LaunchedEffect(key1 = keyLaunch) {
             getEnglishWordsMap()
+            createShuffleTranslateList()
         }
 
         if (showProgress) {
@@ -253,11 +216,9 @@ fun RepeatWordsWithAlert() {
             }
         } else {
             RepeatAlertDialog(showDialog)
-
             if (!showDialog) {
                 CountsGuessWords()
                 ButtonsEnglishWords()
-
             }
         }
     }

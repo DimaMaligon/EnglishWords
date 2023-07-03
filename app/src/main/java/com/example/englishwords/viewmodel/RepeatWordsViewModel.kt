@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -28,16 +29,21 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
     val showDialog: StateFlow<Boolean> = showDialogMutable
     private val showProgressMutable = MutableStateFlow(true)
     val showProgress: StateFlow<Boolean> = showProgressMutable
+    private val keyLaunchRepeatMutable = MutableStateFlow(false)
+    val keyLaunchRepeat: StateFlow<Boolean> = keyLaunchRepeatMutable
 
     suspend fun getEnglishWordsMap() =
         withContext(Dispatchers.IO) {
-            val emptyDataBase = daoData.isEmpty()
+            val emptyDataBase = daoData.checkIsEmpty()
             if (!emptyDataBase) {
                 val countWords = daoData.checkWordsTable()
                 if (countWords > 3) {
-                    englishWordsListMutable.value = daoData.readRandomWords()
-                    onCloseProgress()
-                } else {
+                  launch {
+                      englishWordsListMutable.value = daoData.readRandomWords()
+                      onCloseProgress()
+                  }
+                }
+                else {
                     onCloseProgress()
                     onOpenDialogClicked()
                 }
@@ -47,19 +53,20 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
             }
         }
 
-    fun updateTranslateList() {
-        val listTranscription = englishWordsListMutable.value
-        shuffleWordsListMutable.value = listTranscription.apply { shuffle() }
-    }
+    suspend fun createShuffleTranslateList() =
+        withContext(Dispatchers.IO) {
+            onShowProgress()
+            val listTranscription = englishWordsListMutable.value
+            shuffleWordsListMutable.value = listTranscription.apply { shuffle() }
+            onCloseProgress()
+        }
 
 
     fun guessWord(word: Word): Boolean {
-        shuffleWordsListMutable.value
+        englishWordsListMutable.value
             .let {
-                it.forEach { element ->
-                    if (element.wordEnglish == word.wordEnglish) {
+                    if (it.first().wordEnglish == word.wordEnglish) {
                         return true
-                    }
                 }
             }
         return false
@@ -76,15 +83,15 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
         showDialogMutable.value = true
     }
 
-    fun onDialogConfirm() {
-        showDialogMutable.value = false
-    }
-
-    fun onDialogDismiss() {
-        showDialogMutable.value = false
-    }
-
     fun onCloseProgress() {
         showProgressMutable.value = false
+    }
+
+    fun onShowProgress() {
+        showProgressMutable.value = true
+    }
+
+    fun setLaunchKeyRepeat(key: Boolean) {
+        keyLaunchRepeatMutable.value = key
     }
 }

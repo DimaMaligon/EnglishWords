@@ -107,6 +107,11 @@ fun SimpleAlertCircularProgressIndicator(
     onConfirm: () -> Unit
 ) {
     if (show){
-        CircularProgressIndicator(progress = 50.0f)
+        CircularProgressIndicator(
+            Modifier
+                .padding(top = 350.dp, start = 180.dp),
+            strokeWidth = 10.dp,
+
+            )
     }
 }

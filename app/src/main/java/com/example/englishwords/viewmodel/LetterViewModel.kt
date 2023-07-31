@@ -81,6 +81,8 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
                         )
                     }
                 }
+                englishWordMutable.value = ""
+                englishTranscriptionMutable.value = ""
             }
             else -> {}
         }

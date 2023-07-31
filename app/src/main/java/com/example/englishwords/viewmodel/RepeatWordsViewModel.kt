@@ -29,7 +29,7 @@ class RepeatWordsViewModel @Inject constructor(dbManager: DbManager) : ViewModel
     val showDialog: StateFlow<Boolean> = showDialogMutable
     private val showProgressMutable = MutableStateFlow(true)
     val showProgress: StateFlow<Boolean> = showProgressMutable
-    private val keyLaunchRepeatMutable = MutableStateFlow(false)
+    private val keyLaunchRepeatMutable = MutableStateFlow(true)
     val keyLaunchRepeat: StateFlow<Boolean> = keyLaunchRepeatMutable
 
     suspend fun getEnglishWordsMap() =

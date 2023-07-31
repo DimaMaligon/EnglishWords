@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewModel() {
+class RepeatWordsViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
     private val daoData = dbManager.getDao()
 
     private val guessCountMutable = MutableStateFlow(0)

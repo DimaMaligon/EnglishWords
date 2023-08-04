@@ -38,12 +38,11 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
             if (!emptyDataBase) {
                 val countWords = daoData.checkWordsTable()
                 if (countWords > 3) {
-                  launch {
-                      englishWordsListMutable.value = daoData.readRandomWords()
-                      onCloseProgress()
-                  }
-                }
-                else {
+                    launch {
+                        englishWordsListMutable.value = daoData.readRandomWords()
+                        onCloseProgress()
+                    }
+                } else {
                     onCloseProgress()
                     onOpenDialogClicked()
                 }
@@ -56,7 +55,7 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
     suspend fun createShuffleTranslateList() =
         withContext(Dispatchers.IO) {
             onShowProgress()
-            val listTranscription = englishWordsListMutable.value
+            val listTranscription = englishWordsListMutable.value.toMutableList()
             shuffleWordsListMutable.value = listTranscription.apply { shuffle() }
             onCloseProgress()
         }
@@ -65,8 +64,8 @@ class RepeatWordsViewModel @Inject constructor(var dbManager: DbManager) : ViewM
     fun guessWord(word: Word): Boolean {
         englishWordsListMutable.value
             .let {
-                    if (it.first().wordEnglish == word.wordEnglish) {
-                        return true
+                if (it.first().wordEnglish == word.wordEnglish) {
+                    return true
                 }
             }
         return false

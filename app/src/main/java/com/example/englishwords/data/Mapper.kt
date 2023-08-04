@@ -1,6 +1,6 @@
-package com.example.englishwords.data.sources
+package com.example.englishwords.data
 
-import com.example.englishwords.data.sources.model.WordDbModel
+import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.domain.models.Word
 
 interface Mapper {

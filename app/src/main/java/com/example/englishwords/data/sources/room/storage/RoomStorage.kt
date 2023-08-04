@@ -1,11 +1,11 @@
 package com.example.englishwords.data.sources.room.storage
 
 import android.app.Application
-import com.example.englishwords.data.sources.WordStorage
-import com.example.englishwords.data.sources.model.WordDbModel
+import com.example.englishwords.data.WordStorage
+import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.data.sources.room.db.DbManager
 
-class RoomStorage(private val application: Application): WordStorage{
+class RoomStorage(private val application: Application): WordStorage {
     private val dbManager = DbManager(application)
     private val daoData = dbManager.getDao()
 

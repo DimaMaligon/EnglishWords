@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.englishwords.LocalLetterViewModel
 import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
-import com.example.englishwords.data.sources.model.WordDbModel
+import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
 

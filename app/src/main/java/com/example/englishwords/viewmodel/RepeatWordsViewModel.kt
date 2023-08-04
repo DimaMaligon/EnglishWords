@@ -1,7 +1,7 @@
 package com.example.englishwords.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.englishwords.data.sources.model.WordDbModel
+import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.data.sources.room.db.DbManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

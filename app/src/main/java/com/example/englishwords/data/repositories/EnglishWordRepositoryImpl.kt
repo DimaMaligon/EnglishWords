@@ -1,7 +1,7 @@
-package com.example.englishwords.data.repositories.room
+package com.example.englishwords.data.repositories
 
-import com.example.englishwords.data.sources.Mapper
-import com.example.englishwords.data.sources.WordStorage
+import com.example.englishwords.data.Mapper
+import com.example.englishwords.data.WordStorage
 import com.example.englishwords.domain.models.Word
 import com.example.englishwords.domain.repository.EnglishWordRepository
 import java.util.stream.Collectors

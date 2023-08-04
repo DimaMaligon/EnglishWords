@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.englishwords.data.sources.model.WordDbModel
+import com.example.englishwords.data.model.WordDbModel
 
 @Dao
 interface WordDao {

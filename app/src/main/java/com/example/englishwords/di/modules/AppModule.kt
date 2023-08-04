@@ -1,7 +1,7 @@
 package com.example.englishwords.di.modules
 
 import android.app.Application
-import com.example.englishwords.room.DbManager
+import com.example.englishwords.data.sources.room.db.DbManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

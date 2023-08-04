@@ -1,7 +1,7 @@
 package com.example.englishwords.app
 
 import android.app.Application
-import com.example.englishwords.room.DbManager
+import com.example.englishwords.data.sources.room.db.DbManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

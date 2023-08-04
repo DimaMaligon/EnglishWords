@@ -1,10 +1,10 @@
-package com.example.englishwords.room
+package com.example.englishwords.data.sources.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Word(
+class WordDbModel(
     var letter: String,
     var wordEnglish: String,
     var translate: String

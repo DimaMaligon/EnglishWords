@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import com.example.englishwords.LocalLetterViewModel
 import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
+import com.example.englishwords.data.sources.model.WordDbModel
 import com.example.englishwords.navigation.Screens
-import com.example.englishwords.room.Word
 import com.example.englishwords.ui.theme.fontPlayfair
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,7 +126,7 @@ fun Words(letterFrom: String?) {
             } else {
                 getEnglishTranslateWord(searchWord)
                 val wordTranslateList = arrayListOf(translateWord)
-                setEnglishList(wordTranslateList as List<Word>)
+                setEnglishList(wordTranslateList as List<WordDbModel>)
             }
             WordList(listWords = englishList)
         }
@@ -134,7 +134,7 @@ fun Words(letterFrom: String?) {
 }
 
 @Composable
-fun WordList(listWords: List<Word>) {
+fun WordList(listWords: List<WordDbModel>) {
     LazyColumn(
         modifier = Modifier
             .padding(8.dp)

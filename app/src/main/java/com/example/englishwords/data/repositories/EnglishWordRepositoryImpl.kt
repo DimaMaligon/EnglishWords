@@ -6,20 +6,23 @@ import com.example.englishwords.domain.models.Word
 import com.example.englishwords.domain.repository.EnglishWordRepository
 import java.util.stream.Collectors
 
-class EnglishWordRepositoryImpl(val wordStorage: WordStorage, val mapper: Mapper) : EnglishWordRepository {
+class EnglishWordRepositoryImpl(val wordStorage: WordStorage, val mapper: Mapper) :
+    EnglishWordRepository {
     override suspend fun getRandomEnglishWords(): MutableList<Word> {
         val listWordsStorage = wordStorage.getRandomEnglishWords()
-        val listWords = listWordsStorage.stream().map {
-            mapper.mapFromEntity(it)
-        }.collect(Collectors.toList())
+        val listWords = listWordsStorage.stream()
+            .map {
+                mapper.mapFromEntity(it)
+            }.collect(Collectors.toList())
         return listWords
     }
 
     override suspend fun getEnglishListLetter(letter: String): MutableList<Word> {
         val listWordsStorage = wordStorage.getEnglishListLetter(letter)
-        val listWords = listWordsStorage.stream().map {
-            mapper.mapFromEntity(it)
-        }.collect(Collectors.toList())
+        val listWords = listWordsStorage.stream()
+            .map {
+                mapper.mapFromEntity(it)
+            }.collect(Collectors.toList())
         return listWords
     }
 

@@ -5,7 +5,7 @@ import com.example.englishwords.domain.repository.EnglishWordRepository
 
 class RepeatWordsUseCases {
     class GetEnglishWordsUseCase (private val englishRoomRepository: EnglishWordRepository) {
-        suspend fun дexecute(): MutableList<Word> {
+        suspend fun execute(): MutableList<Word> {
             return englishRoomRepository.getRandomEnglishWords()
         }
     }

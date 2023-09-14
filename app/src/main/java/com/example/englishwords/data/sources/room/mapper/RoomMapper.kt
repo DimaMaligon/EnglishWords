@@ -5,7 +5,7 @@ import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.domain.models.Word
 
 class RoomMapper: Mapper {
-    override fun mapFromEntity(type: WordDbModel): Word {
+    override fun mapToDomain(type: WordDbModel): Word {
         return with(type) {
             Word(
                 letter = letter,

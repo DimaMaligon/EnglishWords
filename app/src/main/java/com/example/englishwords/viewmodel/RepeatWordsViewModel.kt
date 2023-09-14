@@ -1,8 +1,8 @@
 package com.example.englishwords.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.englishwords.data.model.WordDbModel
-import com.example.englishwords.data.sources.room.db.DbManager
+import com.example.englishwords.domain.models.Word
+import com.example.englishwords.domain.usecases.RepeatWordsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,19 +12,19 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RepeatWordsViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
-    private val daoData = dbManager.getDao()
+class RepeatWordsViewModel @Inject constructor(private val repeatWordsViewModel: RepeatWordsUseCases) :
+    ViewModel() {
 
     private val guessCountMutable = MutableStateFlow(0)
     val guessCount: StateFlow<Int> = guessCountMutable
     private val noGuessCountMutable = MutableStateFlow(0)
     val noGuessCount: StateFlow<Int> = noGuessCountMutable
-    private val englishWordsListMutable: MutableStateFlow<MutableList<WordDbModel>> =
+    private val englishWordsListMutable: MutableStateFlow<MutableList<Word>> =
         MutableStateFlow(mutableListOf())
-    val englishWordsList: StateFlow<MutableList<WordDbModel>> = englishWordsListMutable
-    private val shuffleWordsListMutable: MutableStateFlow<MutableList<WordDbModel>> =
+    val englishWordsList: StateFlow<MutableList<Word>> = englishWordsListMutable
+    private val shuffleWordsListMutable: MutableStateFlow<MutableList<Word>> =
         MutableStateFlow(mutableListOf())
-    val shuffleWordsList: MutableStateFlow<MutableList<WordDbModel>> = shuffleWordsListMutable
+    val shuffleWordsList: MutableStateFlow<MutableList<Word>> = shuffleWordsListMutable
     private val showDialogMutable = MutableStateFlow(false)
     val showDialog: StateFlow<Boolean> = showDialogMutable
     private val showProgressMutable = MutableStateFlow(true)
@@ -34,16 +34,17 @@ class RepeatWordsViewModel @Inject constructor(dbManager: DbManager) : ViewModel
 
     suspend fun getEnglishWordsMap() =
         withContext(Dispatchers.IO) {
-            val emptyDataBase = daoData.checkIsEmpty()
+            val emptyDataBase = repeatWordsViewModel.CheckListWordsIsEmptyUseCase().execute()
             if (!emptyDataBase) {
-                val countWords = daoData.checkWordsTable()
+                val countWords = repeatWordsViewModel.CheckCountsWordsUseCase().execute()
                 if (countWords > 3) {
-                  launch {
-                      englishWordsListMutable.value = daoData.readRandomWords()
-                      onCloseProgress()
-                  }
-                }
-                else {
+                    launch {
+                        englishWordsListMutable.value =
+                            repeatWordsViewModel.GetEnglishWordsUseCase()
+                                .execute() as MutableList<Word>
+                        onCloseProgress()
+                    }
+                } else {
                     onCloseProgress()
                     onOpenDialogClicked()
                 }
@@ -62,11 +63,11 @@ class RepeatWordsViewModel @Inject constructor(dbManager: DbManager) : ViewModel
         }
 
 
-    fun guessWord(word: WordDbModel): Boolean {
+    fun guessWord(word: Word): Boolean {
         englishWordsListMutable.value
             .let {
-                    if (it.first().wordEnglish == word.wordEnglish) {
-                        return true
+                if (it.first().wordEnglish == word.wordEnglish) {
+                    return true
                 }
             }
         return false

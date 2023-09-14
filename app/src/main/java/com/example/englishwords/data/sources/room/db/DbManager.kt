@@ -2,7 +2,7 @@ package com.example.englishwords.data.sources.room.db
 
 import android.app.Application
 import androidx.room.Room
-import com.example.englishwords.data.sources.room.dao.WordDao
+import com.example.englishwords.data.sources.room.dao.WordDaoRoom
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +18,7 @@ class DbManager @Inject constructor(val application: Application) {
         ).build()
     }
 
-    fun getDao(): WordDao {
+    fun getDao(): WordDaoRoom {
         return db.wordDao()
     }
 }

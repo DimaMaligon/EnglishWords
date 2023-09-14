@@ -3,20 +3,21 @@ package com.example.englishwords.domain.usecases
 import com.example.englishwords.domain.models.Word
 import com.example.englishwords.domain.repository.EnglishWordRepository
 
-class RepeatWordsUseCases {
-    class GetEnglishWordsUseCase (private val englishRoomRepository: EnglishWordRepository) {
-        suspend fun execute(): MutableList<Word> {
+class RepeatWordsUseCases(val englishRoomRepository: EnglishWordRepository) {
+
+    inner class GetEnglishWordsUseCase {
+        suspend fun execute(): List<Word> {
             return englishRoomRepository.getRandomEnglishWords()
         }
     }
 
-    class CheckListWordsIsEmptyUseCase (private val englishRoomRepository: EnglishWordRepository) {
+    inner class CheckListWordsIsEmptyUseCase {
         fun execute(): Boolean {
             return englishRoomRepository.checkListIsEmpty()
         }
     }
 
-    class CheckCountsWordsUseCase(private val englishRoomRepository: EnglishWordRepository) {
+    inner class CheckCountsWordsUseCase {
         suspend fun execute(): Int {
             return englishRoomRepository.checkCountsWords()
         }

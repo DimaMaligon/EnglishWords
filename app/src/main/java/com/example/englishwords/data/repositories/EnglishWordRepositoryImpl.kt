@@ -1,46 +1,42 @@
 package com.example.englishwords.data.repositories
 
+import com.example.englishwords.data.DaoSource
 import com.example.englishwords.data.Mapper
-import com.example.englishwords.data.WordStorage
+import com.example.englishwords.data.model.WordDbModel
 import com.example.englishwords.domain.models.Word
 import com.example.englishwords.domain.repository.EnglishWordRepository
-import java.util.stream.Collectors
+import javax.inject.Inject
 
-class EnglishWordRepositoryImpl(val wordStorage: WordStorage, val mapper: Mapper) :
-    EnglishWordRepository {
-    override suspend fun getRandomEnglishWords(): MutableList<Word> {
-        val listWordsStorage = wordStorage.getRandomEnglishWords()
-        val listWords = listWordsStorage.stream()
-            .map {
-                mapper.mapFromEntity(it)
-            }.collect(Collectors.toList())
-        return listWords
-    }
-
-    override suspend fun getEnglishListLetter(letter: String): MutableList<Word> {
-        val listWordsStorage = wordStorage.getEnglishListLetter(letter)
-        val listWords = listWordsStorage.stream()
-            .map {
-                mapper.mapFromEntity(it)
-            }.collect(Collectors.toList())
-        return listWords
+class EnglishWordRepositoryImpl @Inject constructor(
+    private val source: DaoSource<WordDbModel>, private val mapper: Mapper
+) : EnglishWordRepository {
+    override suspend fun getRandomEnglishWords(): List<Word> {
+        return source.readRandomWords().map {
+                mapper.mapToDomain(it)
+            }
     }
 
     override suspend fun getEnglishTranslateWord(word: String): Word {
-        val translateWord = wordStorage.getEnglishTranslateWord(word = word)
-        return mapper.mapFromEntity(translateWord)
+        return source.searchWord(word).let {
+            mapper.mapToDomain(it)
+        }
+    }
+
+    override suspend fun getEnglishListLetter(letter: String): List<Word> {
+        return source.readWordsLetter(letter).map {
+            mapper.mapToDomain(it)
+        }
     }
 
     override suspend fun addNewEnglishWord(word: Word) {
-        val englishWord = mapper.mapToEntity(word)
-        wordStorage.addNewEnglishWord(word = englishWord)
+        source.insertToWords(mapper.mapToEntity(word))
     }
 
     override suspend fun checkCountsWords(): Int {
-        return wordStorage.checkCountsWords()
+        return source.checkWordsTable()
     }
 
     override fun checkListIsEmpty(): Boolean {
-        return wordStorage.checkListIsEmpty()
+        return source.checkIsEmpty()
     }
 }

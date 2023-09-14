@@ -2,8 +2,8 @@ package com.example.englishwords.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.englishwords.data.model.WordDbModel
-import com.example.englishwords.data.sources.room.db.DbManager
+import com.example.englishwords.domain.models.Word
+import com.example.englishwords.domain.usecases.LetterWordsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
-    private val daoData = dbManager.getDao()
+class LetterViewModel @Inject constructor(private val letterWordsUseCases: LetterWordsUseCases) :
+    ViewModel() {
 
     private val letterMutable = MutableStateFlow("")
     val letter: StateFlow<String> = letterMutable
@@ -22,13 +22,13 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
     val englishWord: StateFlow<String> = englishWordMutable
     private val englishTranscriptionMutable = MutableStateFlow("")
     val englishTranscription: StateFlow<String> = englishTranscriptionMutable
-    private val englishListMutable: MutableStateFlow<MutableList<WordDbModel>> =
+    private val englishListMutable: MutableStateFlow<MutableList<Word>> =
         MutableStateFlow(mutableListOf())
-    val englishList: StateFlow<List<WordDbModel>> = englishListMutable
+    val englishList: StateFlow<List<Word>> = englishListMutable
     private val tapMutable = MutableStateFlow(false)
     val tap: StateFlow<Boolean> = tapMutable
-    private val translateWordMutable = MutableStateFlow(WordDbModel("", "", ""))
-    val translateWord: StateFlow<WordDbModel> = translateWordMutable
+    private val translateWordMutable = MutableStateFlow(Word("", "", ""))
+    val translateWord: StateFlow<Word> = translateWordMutable
     private val searchWordMutable = MutableStateFlow("")
     val searchWord: StateFlow<String> = searchWordMutable
 
@@ -51,19 +51,19 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
     fun getEnglishList() {
         viewModelScope.launch {
             englishListMutable.value = withContext(Dispatchers.IO) {
-                daoData.readWordsLetter(letter.value)
-            }
+                letterWordsUseCases.GetEnglishListLetterUseCase().execute(letter.value)
+            }.toMutableList()
         }
     }
 
-    fun setEnglishList(list: List<WordDbModel>) {
+    fun setEnglishList(list: List<Word>) {
         englishListMutable.value = list.toMutableList()
     }
 
     fun getEnglishTranslateWord(word: String) {
         viewModelScope.launch {
-            val word = daoData.searchWord(word)
-                translateWordMutable.value = word
+            val word = letterWordsUseCases.GetEnglishTranslateWordUseCase().execute(word)
+            translateWordMutable.value = word
         }
     }
 
@@ -76,17 +76,16 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
                 englishWordMutable.value = ""
                 englishTranscriptionMutable.value = ""
             }
+
             else -> {}
         }
     }
 
     fun addEnglishWord(letter: String) {
         viewModelScope.launch {
-            daoData.insertToWords(
-                WordDbModel(
-                    letter,
-                    englishWordMutable.value,
-                    englishTranscriptionMutable.value
+            letterWordsUseCases.AddNewWordUseCase().execute(
+                Word(
+                    letter, englishWordMutable.value, englishTranscriptionMutable.value
                 )
             )
         }

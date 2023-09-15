@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class RepeatWordsViewModel @Inject constructor(private val repeatWordsViewModel: RepeatWordsUseCases) :
+class RepeatWordsViewModel @Inject constructor(private val repeatWordsUseCases: RepeatWordsUseCases) :
     ViewModel() {
 
     private val guessCountMutable = MutableStateFlow(0)
@@ -34,13 +34,13 @@ class RepeatWordsViewModel @Inject constructor(private val repeatWordsViewModel:
 
     suspend fun getEnglishWordsMap() =
         withContext(Dispatchers.IO) {
-            val emptyDataBase = repeatWordsViewModel.CheckListWordsIsEmptyUseCase().execute()
+            val emptyDataBase = repeatWordsUseCases.CheckListWordsIsEmptyUseCase().execute()
             if (!emptyDataBase) {
-                val countWords = repeatWordsViewModel.CheckCountsWordsUseCase().execute()
+                val countWords = repeatWordsUseCases.CheckCountsWordsUseCase().execute()
                 if (countWords > 3) {
                     launch {
                         englishWordsListMutable.value =
-                            repeatWordsViewModel.GetEnglishWordsUseCase()
+                            repeatWordsUseCases.GetEnglishWordsUseCase()
                                 .execute() as MutableList<Word>
                         onCloseProgress()
                     }

@@ -1,7 +1,8 @@
-package com.example.englishwords.room
+package com.example.englishwords.data.sources.room.db
 
 import android.app.Application
 import androidx.room.Room
+import com.example.englishwords.data.sources.room.dao.WordDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

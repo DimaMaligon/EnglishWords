@@ -34,20 +34,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.englishwords.LocalNavController
 import com.example.englishwords.R
-import com.example.englishwords.data.Alphabet
 import com.example.englishwords.navigation.Screens
 import com.example.englishwords.ui.theme.fontPlayfair
 
-object Constants {
-    const val GridCells = 4
-}
+const val GridCellsCount = 4
+val listLetters = arrayListOf("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LetterListScreen() {
     val navController = LocalNavController.current
     val letters = remember {
-        Alphabet.listLetters
+        listLetters
     }
     Surface(color = MaterialTheme.colorScheme.primaryContainer) {
         Scaffold(
@@ -77,7 +75,7 @@ fun LetterListScreen() {
             content = { padding ->
                 Column(modifier = Modifier.padding(padding)) {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(Constants.GridCells)
+                        columns = GridCells.Fixed(GridCellsCount)
                     ) {
                         items(
                             letters.size,

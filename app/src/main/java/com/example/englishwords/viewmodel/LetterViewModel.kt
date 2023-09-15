@@ -2,8 +2,8 @@ package com.example.englishwords.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.englishwords.room.DbManager
-import com.example.englishwords.room.Word
+import com.example.englishwords.data.model.WordDbModel
+import com.example.englishwords.data.sources.room.db.DbManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,13 +22,13 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
     val englishWord: StateFlow<String> = englishWordMutable
     private val englishTranscriptionMutable = MutableStateFlow("")
     val englishTranscription: StateFlow<String> = englishTranscriptionMutable
-    private val englishListMutable: MutableStateFlow<MutableList<Word>> =
+    private val englishListMutable: MutableStateFlow<MutableList<WordDbModel>> =
         MutableStateFlow(mutableListOf())
-    val englishList: StateFlow<List<Word>> = englishListMutable
+    val englishList: StateFlow<List<WordDbModel>> = englishListMutable
     private val tapMutable = MutableStateFlow(false)
     val tap: StateFlow<Boolean> = tapMutable
-    private val translateWordMutable = MutableStateFlow(Word("", "", ""))
-    val translateWord: StateFlow<Word> = translateWordMutable
+    private val translateWordMutable = MutableStateFlow(WordDbModel("", "", ""))
+    val translateWord: StateFlow<WordDbModel> = translateWordMutable
     private val searchWordMutable = MutableStateFlow("")
     val searchWord: StateFlow<String> = searchWordMutable
 
@@ -56,7 +56,7 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
         }
     }
 
-    fun setEnglishList(list: List<Word>) {
+    fun setEnglishList(list: List<WordDbModel>) {
         englishListMutable.value = list.toMutableList()
     }
 
@@ -71,20 +71,24 @@ class LetterViewModel @Inject constructor(dbManager: DbManager) : ViewModel() {
         when (tap) {
             true -> {
                 letter.let {
-                    viewModelScope.launch {
-                        daoData.insertToWords(
-                            Word(
-                                it.value,
-                                englishWordMutable.value,
-                                englishTranscriptionMutable.value
-                            )
-                        )
-                    }
+                    addEnglishWord(it.value)
                 }
                 englishWordMutable.value = ""
                 englishTranscriptionMutable.value = ""
             }
             else -> {}
+        }
+    }
+
+    fun addEnglishWord(letter: String) {
+        viewModelScope.launch {
+            daoData.insertToWords(
+                WordDbModel(
+                    letter,
+                    englishWordMutable.value,
+                    englishTranscriptionMutable.value
+                )
+            )
         }
     }
 }

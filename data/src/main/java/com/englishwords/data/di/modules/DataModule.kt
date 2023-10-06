@@ -38,6 +38,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideCocktailsRepositories(wordDao: WordDaoRoom, mapper: Mapper): EnglishWordRepository =
+    fun provideEnglishWordRepositories(wordDao: WordDaoRoom, mapper: Mapper): EnglishWordRepository =
         EnglishWordRepositoryImpl(wordDao, mapper)
 }

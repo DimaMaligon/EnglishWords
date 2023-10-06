@@ -3,7 +3,8 @@
 .project
 .classpath
 .vscode
-.idea
+.idea/
+.idea/misc.xml
 build
 *.iml
 local.properties
